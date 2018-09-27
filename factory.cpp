@@ -5,24 +5,26 @@ using namespace std;
 FactoryHandler::FactoryHandler(){};
 FactoryHandler::~FactoryHandler(){};
 
-void FactoryHandler::produce(float planetResources[nrOfResources])
+//void FactoryHandler::produce(float planetResources[nrOfResources])
+void FactoryHandler::produce(Resource* planetResources)
 {
-    for (int i = 0; i < nrOfFactories; i++)
+    planetResources->resources[planetResources->food] += 1;
+    /*for (int i = 0; i < nrOfFactories; i++)
     {
         switch(i)
         {
             case farm:
-                planetResources[food] += 1;
+                planetResources[Resource::food] += 1;
                 break;
 
             case mine:
-                planetResources[metal] += 1;
+                planetResources[Resource::metal] += 1;
                 break;
 
             case factory:
-                planetResources[metal] -= 1;
-                planetResources[goods] += 1;
+                planetResources[Resource::metal] -= 1;
+                planetResources[Resource::goods] += 1;
                 break;
         }
-    }
+    }*/
 }

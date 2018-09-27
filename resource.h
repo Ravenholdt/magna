@@ -1,13 +1,25 @@
 #pragma once
 
-enum Resources
+class Resource
 {
-    wealth,
-    soil,
-    ore,
-    metal,
-    food,
-    goods,
+protected:
 
-    nrOfResources
+public:
+
+    enum ResourceList
+    {
+        wealth,
+        soil,
+        ore,
+        metal,
+        food,
+        goods,
+
+        nrOfResources
+    };
+
+    float resources[nrOfResources] = {};
+
+    Resource();
+    ~Resource();
 };

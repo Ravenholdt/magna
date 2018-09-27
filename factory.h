@@ -4,6 +4,8 @@
 
 #include "resource.h"
 
+using namespace std;
+
 enum FactoryType
 {
     farm,
@@ -16,14 +18,31 @@ enum FactoryType
 class FactoryHandler
 {
 public:
-    float request[nrOfResources];
-    float output[nrOfResources];
+    //float request[nrOfResources];
+    //float output[nrOfResources];
 
-    float factoryArray[nrOfFactories];
+    //float factoryArray[nrOfFactories];
     FactoryHandler();
     ~FactoryHandler();
 
-    void produce(float planetResources[nrOfResources]);
+    //void produce(float planetResources[nrOfResources]);
+    void produce(Resource* planetResources);
 };
 
-//class Factory
+
+class Factory
+{
+protected:
+public:
+    int id;
+    
+    //Resource input = new Resource();
+    map<int, float> input = {};
+    map<int, float> output = {};
+
+    map<int, float> require = {};
+    map<int, float> upkeep = {};
+
+    Factory();
+    ~Factory();
+};

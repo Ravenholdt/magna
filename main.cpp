@@ -7,8 +7,8 @@ class Celestial
 protected:
     int id;
 
-    float population;
-    float resources[nrOfResources];
+    //float resources[Resource::nrOfResources];
+    Resource* resources = new Resource();
 
 public:
     string name;
@@ -16,27 +16,27 @@ public:
     Celestial(){};
     ~Celestial(){};
 
-    float* getResources(){
+    Resource* getResources(){
         return resources;
     };
 };
 
 int main()
 {
-    printf("%d\n", nrOfResources);
-
     Celestial* earth = new Celestial();
     FactoryHandler* factories = new FactoryHandler();
 
+    printf("%d\n", earth->getResources()->nrOfResources);
+    //printf("%.0f!\n", Farm.output[food]);
 
     int running = 1;
     while (running)
     {
         getchar();
         factories->produce(earth->getResources());
-        for (int i = 0; i < nrOfResources; i++)
+        for (int i = 0; i < earth->getResources()->nrOfResources; i++)
         {
-            printf("%.0f\n", earth->getResources()[i]);
+            printf("%.0f\n", earth->getResources()->resources[i]);
         }
     }
 

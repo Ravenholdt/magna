@@ -16,10 +16,10 @@ enum FactoryType
 class FactoryHandler
 {
 public:
-    float request[nrOfResources];
-    float output[nrOfResources];
+    float request[nrOfResources] = {};
+    float output[nrOfResources] = {};
 
-    float factoryArray[nrOfFactories];
+    float factoryArray[nrOfFactories] = {};
     FactoryHandler();
     ~FactoryHandler();
 

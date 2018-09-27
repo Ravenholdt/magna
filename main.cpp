@@ -7,8 +7,8 @@ class Celestial
 protected:
     int id;
 
-    float population;
-    float resources[nrOfResources];
+    float population = 0;
+    float resources[nrOfResources] = {};
 
 public:
     string name;

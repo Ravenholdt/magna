@@ -15,34 +15,39 @@ enum FactoryType
     nrOfFactories
 };
 
-class FactoryHandler
-{
-public:
-    //float request[nrOfResources];
-    //float output[nrOfResources];
-
-    //float factoryArray[nrOfFactories];
-    FactoryHandler();
-    ~FactoryHandler();
-
-    //void produce(float planetResources[nrOfResources]);
-    void produce(Resource* planetResources);
-};
-
-
 class Factory
 {
 protected:
 public:
     int id;
-    
     //Resource input = new Resource();
-    map<int, float> input = {};
-    map<int, float> output = {};
+    //map<int, float> input = {};
+    Resource* input = new Resource();
+    //map<int, float> output = {};
+    Resource* output = new Resource();
 
-    map<int, float> require = {};
-    map<int, float> upkeep = {};
+    //map<int, float> require = {};
+    Resource* require = new Resource();
+    //map<int, float> upkeep = {};
+    Resource* upkeep = new Resource();
 
     Factory();
     ~Factory();
+};
+
+class FactoryHandler
+{
+public:
+    //float request[nrOfResources];
+    Resource* request = new Resource();
+    //float output[nrOfResources];
+    Resource* output = new Resource();
+
+    //float factoryArray[nrOfFactories];
+    Factory* factoryArray[nrOfFactories];
+    FactoryHandler();
+    ~FactoryHandler();
+
+    //void produce(float planetResources[nrOfResources]);
+    void produce(Resource* planetResources);
 };

@@ -22,4 +22,6 @@ public:
 
     Resource();
     ~Resource();
+
+    void transferTo(Resource* target);
 };

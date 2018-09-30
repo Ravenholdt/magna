@@ -36,7 +36,7 @@ int main()
         factories->produce(earth->getResources());
         for (int i = 0; i < earth->getResources()->nrOfResources; i++)
         {
-            printf("%.0f\n", earth->getResources()->resources[i]);
+            printf("%.1f\n", earth->getResources()->resources[i]);
         }
     }
 

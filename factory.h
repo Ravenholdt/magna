@@ -42,7 +42,9 @@ public:
     };
 
     //float request[nrOfResources];
-    Resource* request = new Resource();
+    Resource* efficiency = new Resource();
+    Resource* efficiency_input = new Resource();
+    Resource* efficiency_output = new Resource();
     //float output[nrOfResources];
     Resource* output = new Resource();
 

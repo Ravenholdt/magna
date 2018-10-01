@@ -29,6 +29,11 @@ int main()
     printf("%d\n", earth->getResources()->nrOfResources);
     //printf("%.0f!\n", Farm.output[food]);
 
+    for (int i = 0; i < earth->getResources()->nrOfResources; i++)
+    {
+        printf("%.1f\n", earth->getResources()->resources[i]);
+    }
+
     int running = 1;
     while (running)
     {

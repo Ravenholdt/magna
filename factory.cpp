@@ -23,7 +23,7 @@ FactoryHandler::FactoryHandler()
                 //planetResources[Resource::metal] -= 1;
                 //planetResources[Resource::goods] += 1;
                 factoryArray[factory] = new Factory();
-                factoryArray[factory]->input->resources[Resource::metal] = -0.5;
+                factoryArray[factory]->input->resources[Resource::metal] = 0.5;
                 factoryArray[factory]->output->resources[Resource::goods] = 1;
                 break;
         }
@@ -38,9 +38,9 @@ void FactoryHandler::produce(Resource* planetResources)
     for (int i = 0; i < nrOfFactories; i++)
     {
         // Sending resources to the factories
-        factoryArray[i]->input->transferTo(planetResources);
+        factoryArray[i]->input->removeFrom(planetResources);
         // Returning resources from the factories
-        factoryArray[i]->output->transferTo(planetResources);
+        factoryArray[i]->output->addTo(planetResources);
     }
 }
 

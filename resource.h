@@ -23,5 +23,12 @@ public:
     Resource();
     ~Resource();
 
-    void transferTo(Resource* target);
+    // Transfer amount from this to target
+    void transferTo(Resource* target, Resource* amount);
+
+    // Add this amount to target
+    void addTo(Resource* target);
+
+    // Remove this amount from target
+    void removeFrom(Resource* target);
 };

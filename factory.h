@@ -6,19 +6,12 @@
 
 using namespace std;
 
-enum FactoryType
-{
-    farm,
-    mine,
-    factory,
-
-    nrOfFactories
-};
-
 class Factory
 {
 protected:
+
 public:
+
     int id;
     //Resource input = new Resource();
     //map<int, float> input = {};
@@ -38,6 +31,16 @@ public:
 class FactoryHandler
 {
 public:
+
+    enum FactoryType
+    {
+        farm,
+        mine,
+        factory,
+
+        nrOfFactories
+    };
+
     //float request[nrOfResources];
     Resource* request = new Resource();
     //float output[nrOfResources];

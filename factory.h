@@ -13,15 +13,17 @@ protected:
 public:
 
     int id;
-    //Resource input = new Resource();
-    //map<int, float> input = {};
+
+    // Required input from the planetary stockpile
     Resource* input = new Resource();
-    //map<int, float> output = {};
+    // Input mined from the planet
+    Resource* planetary_input = new Resource();
+    // Output to the planetary stockpile
     Resource* output = new Resource();
 
-    //map<int, float> require = {};
+    // Requided materials for the factory to operate, not to be consumed.
     Resource* require = new Resource();
-    //map<int, float> upkeep = {};
+    // Materials consumed no matter how much is produced.
     Resource* upkeep = new Resource();
 
     Factory();
@@ -54,5 +56,5 @@ public:
     ~FactoryHandler();
 
     //void produce(float planetResources[nrOfResources]);
-    void produce(Resource* planetResources);
+    void produce(Resource* planetStockpile);
 };

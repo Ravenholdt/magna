@@ -14,14 +14,11 @@ FactoryHandler::FactoryHandler()
                 break;
 
             case mine:
-                //planetResources[Resource::metal] += 1;
                 factoryArray[mine] = new Factory();
                 factoryArray[mine]->output->resources[Resource::metal] = 1;
                 break;
 
             case factory:
-                //planetResources[Resource::metal] -= 1;
-                //planetResources[Resource::goods] += 1;
                 factoryArray[factory] = new Factory();
                 factoryArray[factory]->input->resources[Resource::metal] = 1;
                 factoryArray[factory]->output->resources[Resource::goods] = 1;
@@ -31,8 +28,7 @@ FactoryHandler::FactoryHandler()
 };
 FactoryHandler::~FactoryHandler(){};
 
-//void FactoryHandler::produce(float planetResources[nrOfResources])
-void FactoryHandler::produce(Resource* planetResources)
+void FactoryHandler::produce(Resource* planetStockpile)
 {
     Resource* request = new Resource();
 
@@ -45,7 +41,7 @@ void FactoryHandler::produce(Resource* planetResources)
     // Check if all the required materials are avalible
     for (int i = 0; i < Resource::nrOfResources; i++)
     {
-        float efficiency = planetResources->resources[i] / request->resources[i];
+        float efficiency = planetStockpile->resources[i] / request->resources[i];
         if (efficiency > 1) {efficiency = 1;}
         this->efficiency->resources[i] = efficiency;
     }
@@ -71,9 +67,9 @@ void FactoryHandler::produce(Resource* planetResources)
         }
 
         // Sending resources to the factories
-        this->efficiency_input->removeFrom(planetResources);
+        this->efficiency_input->removeFrom(planetStockpile);
         // Returning resources from the factories
-        this->efficiency_output->addTo(planetResources);
+        this->efficiency_output->addTo(planetStockpile);
     }
 }
 

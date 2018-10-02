@@ -8,7 +8,7 @@ protected:
     int id;
 
     //float resources[Resource::nrOfResources];
-    Resource* resources = new Resource();
+    Resource* stockpile = new Resource();
 
 public:
     string name;
@@ -16,8 +16,8 @@ public:
     Celestial(){};
     ~Celestial(){};
 
-    Resource* getResources(){
-        return resources;
+    Resource* getStockpile(){
+        return stockpile;
     };
 };
 
@@ -26,22 +26,22 @@ int main()
     Celestial* earth = new Celestial();
     FactoryHandler* factories = new FactoryHandler();
 
-    printf("%d\n", earth->getResources()->nrOfResources);
+    printf("%d\n", Resource::nrOfResources);
     //printf("%.0f!\n", Farm.output[food]);
 
-    for (int i = 0; i < earth->getResources()->nrOfResources; i++)
+    for (int i = 0; i < Resource::nrOfResources; i++)
     {
-        printf("%.1f\n", earth->getResources()->resources[i]);
+        printf("%.1f\n", earth->getStockpile()->resources[i]);
     }
 
     int running = 1;
     while (running)
     {
         getchar();
-        factories->produce(earth->getResources());
-        for (int i = 0; i < earth->getResources()->nrOfResources; i++)
+        factories->produce(earth->getStockpile());
+        for (int i = 0; i < Resource::nrOfResources; i++)
         {
-            printf("%.1f\n", earth->getResources()->resources[i]);
+            printf("%.1f\n", earth->getStockpile()->resources[i]);
         }
     }
 

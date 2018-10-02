@@ -13,6 +13,7 @@ protected:
 public:
 
     int id;
+    bool mine;
 
     // Required input from the planetary stockpile
     Resource* input = new Resource();
@@ -56,5 +57,5 @@ public:
     ~FactoryHandler();
 
     //void produce(float planetResources[nrOfResources]);
-    void produce(Resource* planetStockpile);
+    void produce(Resource* planetStockpile, Resource* planetResources);
 };

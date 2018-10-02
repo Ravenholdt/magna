@@ -4,6 +4,7 @@ using namespace std;
 
 FactoryHandler::FactoryHandler()
 {
+    // Initiate all the factories
     for (int i = 0; i < nrOfFactories; i++)
     {
         switch(i)
@@ -15,6 +16,8 @@ FactoryHandler::FactoryHandler()
 
             case mine:
                 factoryArray[mine] = new Factory();
+                factoryArray[mine]->mine = true;
+                factoryArray[mine]->planetary_input->resources[Resource::metal] = 1;
                 factoryArray[mine]->output->resources[Resource::metal] = 1;
                 break;
 
@@ -28,7 +31,7 @@ FactoryHandler::FactoryHandler()
 };
 FactoryHandler::~FactoryHandler(){};
 
-void FactoryHandler::produce(Resource* planetStockpile)
+void FactoryHandler::produce(Resource* planetStockpile, Resource* planetResources)
 {
     Resource* request = new Resource();
 
@@ -46,12 +49,15 @@ void FactoryHandler::produce(Resource* planetStockpile)
         this->efficiency->resources[i] = efficiency;
     }
 
+    // Produce
     for (int i = 0; i < nrOfFactories; i++)
     {
         float efficiency = 1;
 
+        // Calculate the efficiency for the current factory depending on the avalible resources, using the lowest efficiency per factory.
         for (int n = 0; n < Resource::nrOfResources; n++)
         {
+            // Check if the new efficiency is lower than the last.
             if (factoryArray[i]->input->resources[n] > 0 && this->efficiency->resources[n] < efficiency)
             {
                 efficiency = this->efficiency->resources[n];
@@ -60,10 +66,18 @@ void FactoryHandler::produce(Resource* planetStockpile)
 
         printf("Efficiency[%d]: %0.4f\n", i, efficiency);
 
+        // Calculate the production output and input depending on the efficiency.
         for (int n = 0; n < Resource::nrOfResources; n++)
         {
             this->efficiency_input->resources[n] = factoryArray[i]->input->resources[n] * efficiency;
-            this->efficiency_output->resources[n] = factoryArray[i]->output->resources[n] * efficiency;
+
+            if (factoryArray[i]->mine)
+            {
+                // If factory is a mine and wants the resource from a planet
+                this->efficiency_output->resources[n] = factoryArray[i]->output->resources[n] * planetResources->resources[n] * efficiency;
+            } else {
+                this->efficiency_output->resources[n] = factoryArray[i]->output->resources[n] * efficiency;
+            }
         }
 
         // Sending resources to the factories

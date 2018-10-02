@@ -31,9 +31,22 @@ FactoryHandler::FactoryHandler()
 };
 FactoryHandler::~FactoryHandler(){};
 
-void FactoryHandler::produce(Resource* planetStockpile, Resource* planetResources)
+/*
+The Produce function works by first checking how much resource each factory require.
+It then compares this to the avalible stockpile and ranson the resources so that all factories can operate.
+*/
+//void FactoryHandler::produce(Resource* planetStockpile, Resource* planetResources)
+void FactoryHandler::produce(Resource** planetResourcePack)
 {
-    Resource* request = new Resource();
+    Resource* planetStockpile = planetResourcePack[0];
+    Resource* planetResources = planetResourcePack[1];
+    Resource* request = planetResourcePack[2];
+
+    // Clear request.
+    for (int i = 0; i < Resource::nrOfResources; i++)
+    {
+        request->resources[i] = 0;
+    }
 
     // Factories requestion materials.
     for (int i = 0; i < nrOfFactories; i++)

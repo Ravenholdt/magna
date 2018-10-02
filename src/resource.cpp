@@ -2,10 +2,15 @@
 
 #include <iostream>
 
-Resource::Resource()
+Resource::Resource(float setDefault) 
 {
-    /*for (int i = 0; i < nrOfResources; i++)
-        resources[i] = 0;*/
+    if (setDefault)
+    {
+        for (int i = 0; i < nrOfResources; i++)
+        {
+            resources[i] = setDefault;
+        }
+    }
 }
 
 void Resource::transferTo(Resource* target, Resource* amount)

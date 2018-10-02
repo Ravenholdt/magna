@@ -20,7 +20,7 @@ public:
 
     float resources[nrOfResources] = {};
 
-    Resource();
+    Resource(float setDefault = 0);
     ~Resource();
 
     // Transfer amount from this to target

@@ -6,4 +6,4 @@ project(Magna)
 include_directories( ${MY_SOURCE_DIR} )
 include_directories("${PROJECT_BINARY_DIR}")
 
-add_executable(main.cpp factory.cpp resource.cpp)
+add_executable(magna main.cpp factory.cpp resource.cpp)

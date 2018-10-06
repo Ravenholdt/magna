@@ -6,3 +6,4 @@
 
 #include "factory.h"
 #include "resource.h"
+#include "celestial.h"

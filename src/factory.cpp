@@ -10,21 +10,24 @@ FactoryHandler::FactoryHandler()
         switch(i)
         {
             case farm:
-                factoryArray[farm] = new Factory();
-                factoryArray[farm]->output->resources[Resource::food] = 1;
+                factoryArray[i] = new Factory();
+                factoryArray[i]->output->resources[Resource::food] = 1;
+                factoryArray[i]->upkeep->resources[Resource::wealth] = 0.1;
                 break;
 
             case mine:
-                factoryArray[mine] = new Factory();
-                factoryArray[mine]->mine = true;
-                factoryArray[mine]->planetary_input->resources[Resource::metal] = 1;
-                factoryArray[mine]->output->resources[Resource::metal] = 1;
+                factoryArray[i] = new Factory();
+                factoryArray[i]->mine = true;
+                factoryArray[i]->planetary_input->resources[Resource::metal] = 1;
+                factoryArray[i]->output->resources[Resource::metal] = 1;
+                factoryArray[i]->upkeep->resources[Resource::wealth] = 0.2;
                 break;
 
             case factory:
-                factoryArray[factory] = new Factory();
-                factoryArray[factory]->input->resources[Resource::metal] = 1;
-                factoryArray[factory]->output->resources[Resource::goods] = 1;
+                factoryArray[i] = new Factory();
+                factoryArray[i]->input->resources[Resource::metal] = 1;
+                factoryArray[i]->output->resources[Resource::goods] = 1;
+                factoryArray[i]->upkeep->resources[Resource::wealth] = 0.2;
                 break;
         }
     }
@@ -42,6 +45,7 @@ void FactoryHandler::produce(Resource* consumedResources, Resource* producedReso
     for (int i = 0; i < nrOfFactories; i++)
     {
         float tmpEfficiency = 1;
+        float upkeepEfficiency = 1;
 
         Resource* expenses = new Resource(); // The value of all consumed resources to run the factory
         Resource* income = new Resource(); // The value of all outputs from the factory
@@ -56,15 +60,27 @@ void FactoryHandler::produce(Resource* consumedResources, Resource* producedReso
             }
         }
 
-        printf("Efficiency[%d]: %0.4f\n", i, tmpEfficiency);
+        // Calculate the efficiency for the current factory depending on the avalible resources, using the lowest efficiency per factory.
+        for (int n = 0; n < Resource::nrOfResources; n++)
+        {
+            // Check if the new efficiency is lower than the last.
+            if (factoryArray[i]->upkeep->resources[n] > 0 && efficiency->resources[n] < upkeepEfficiency)
+            {
+                upkeepEfficiency = efficiency->resources[n];
+            }
+        }
+        //upkeepEfficiency = 0.1;
+
+        tmpEfficiency *= upkeepEfficiency;
+        printf("Efficiency[%d]: %0.4f, %0.4f\n", i, tmpEfficiency, upkeepEfficiency);
 
         tmpEfficiency *= factoryArray[i]->amount;
 
         // Calculate the production output and input depending on the efficiency.
         for (int n = 0; n < Resource::nrOfResources; n++)
         {
-            expenses->resources[n] += factoryArray[i]->input->resources[n] * tmpEfficiency;
-            consumedResources->resources[n] += factoryArray[i]->input->resources[n] * tmpEfficiency;
+            expenses->resources[n] += factoryArray[i]->input->resources[n] * tmpEfficiency + factoryArray[i]->upkeep->resources[n] * factoryArray[i]->amount * upkeepEfficiency;
+            consumedResources->resources[n] += factoryArray[i]->input->resources[n] * tmpEfficiency + factoryArray[i]->upkeep->resources[n] * factoryArray[i]->amount * upkeepEfficiency;
 
             if (factoryArray[i]->mine)
             {
@@ -90,7 +106,11 @@ void FactoryHandler::request(Resource* requestedResources)
 {
     for (int i = 0; i < nrOfFactories; i++)
     {
-        factoryArray[i]->input->addTo(requestedResources);
+        for (int n = 0; n < Resource::nrOfResources; n++)
+        {
+            requestedResources->resources[n] += factoryArray[i]->input->resources[n] * factoryArray[i]->amount;
+            requestedResources->resources[n] += factoryArray[i]->upkeep->resources[n] * factoryArray[i]->amount;
+        }
     }
 }
 

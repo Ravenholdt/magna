@@ -4,6 +4,7 @@ Celestial::Celestial()
 { 
     celestialResources->resources[Resource::metal] = 0.5; 
     population = 10;
+    stockpile->resources[Resource::wealth] = population;
 };
 Celestial::~Celestial(){};
 
@@ -30,13 +31,13 @@ void Celestial::calculateDemand(Resource* requestedResources)
 void Celestial::produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency)
 {
     this->factories->produce(consumedResources, producedResources, efficiency, this->celestialResources);
-    this->consume(consumedResources, efficiency);
+    this->consume(consumedResources, producedResources, efficiency);
 }
 
 // The population and planet consume resources.
-void Celestial::consume(Resource* consumedResources, Resource* efficiency)
+void Celestial::consume(Resource* consumedResources, Resource* producedResources, Resource* efficiency)
 {
-    consumedResources->resources[Resource::wealth] += -population * efficiency->resources[Resource::wealth];
+    producedResources->resources[Resource::wealth] += population;
     consumedResources->resources[Resource::food] += population * efficiency->resources[Resource::food];
     consumedResources->resources[Resource::metal] += population * efficiency->resources[Resource::metal];
 
@@ -57,8 +58,8 @@ void Celestial::calculateNewMarketPrice(Resource* stockpileDemand)
             } else {
                 if (stockpileDemand->resources[i] == 0) { avalibility = 0.1; }
                 if (this->stockpile->resources[i] == 0){ avalibility = 10; }
-                if (avalibility > 10){ avalibility = 10; }
-                if (avalibility < 0.1) { avalibility = 0.1; }
+                if (avalibility > 2){ avalibility = 2; }
+                if (avalibility < 0.5) { avalibility = 0.5; }
             }
             this->marketPrice->resources[i] *= avalibility;
         }
@@ -71,6 +72,8 @@ void Celestial::tick()
     Resource* requestedResources = new Resource();
     this->calculateDemand(requestedResources);
 
+    printf("WEALTH EFF: %.3f..%.3f\n", this->stockpile->resources[Resource::wealth], requestedResources->resources[Resource::wealth]);
+
     // Calculate the efficiency of production
     Resource* efficiency = new Resource();
     // Check if all the required materials are avalible
@@ -80,6 +83,9 @@ void Celestial::tick()
         if (tmpEfficiency > 1) {tmpEfficiency = 1;}
         efficiency->resources[i] = tmpEfficiency;
     }
+    //efficiency->resources[Resource::wealth] = 0.1;
+
+    //printf("WEALTH EFF: %.3f\n", efficiency->resources[Resource::wealth]);
 
     // Produce resources from factories
     Resource* consumedResources = new Resource();

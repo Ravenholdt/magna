@@ -36,7 +36,7 @@ public:
 
     void calculateDemand(Resource* requestedResources);
     void produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency);
-    void consume(Resource* consumedResources, Resource* efficiency = new Resource(1));
+    void consume(Resource* consumedResources, Resource* producedResources  = new Resource(), Resource* efficiency = new Resource(1));
     void calculateNewMarketPrice(Resource* stockpileDemand);
     void tick();
 };

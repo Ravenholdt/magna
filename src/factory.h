@@ -14,6 +14,8 @@ public:
 
     int id;
     bool mine;
+    float profit;
+    float amount;
 
     // Required input from the planetary stockpile
     Resource* input = new Resource();
@@ -26,6 +28,9 @@ public:
     Resource* require = new Resource();
     // Materials consumed no matter how much is produced.
     Resource* upkeep = new Resource();
+
+    Resource* expenses = new Resource();
+    Resource* income = new Resource();
 
     Factory();
     ~Factory();
@@ -61,4 +66,5 @@ public:
     //void produce(Resource** planetResourcePack);
 
     void request(Resource* requestedResources);
+    void calculateProfit(Resource* marketPrice);
 };

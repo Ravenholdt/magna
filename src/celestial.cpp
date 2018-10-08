@@ -1,6 +1,10 @@
 #include "celestial.h"
 
-Celestial::Celestial(){ celestialResources->resources[Resource::metal] = 0.5; };
+Celestial::Celestial()
+{ 
+    celestialResources->resources[Resource::metal] = 0.5; 
+    population = 10;
+};
 Celestial::~Celestial(){};
 
 Resource* Celestial::getStockpile(){ return this->stockpile; }
@@ -19,18 +23,24 @@ Resource **Celestial::getResourcePack()
 void Celestial::calculateDemand(Resource* requestedResources)
 {
     factories->request(requestedResources);
+    this->consume(requestedResources);
 }
 
 // The factories consume and produce.
 void Celestial::produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency)
 {
     this->factories->produce(consumedResources, producedResources, efficiency, this->celestialResources);
+    this->consume(consumedResources, efficiency);
 }
 
 // The population and planet consume resources.
-void Celestial::consume()
+void Celestial::consume(Resource* consumedResources, Resource* efficiency)
 {
+    consumedResources->resources[Resource::wealth] += -population * efficiency->resources[Resource::wealth];
+    consumedResources->resources[Resource::food] += population * efficiency->resources[Resource::food];
+    consumedResources->resources[Resource::metal] += population * efficiency->resources[Resource::metal];
 
+    printf("TESTING: %.3f\n", efficiency->resources[Resource::food]);
 }
 
 // Calculate price
@@ -82,4 +92,6 @@ void Celestial::tick()
 
     // Calculate the new market price
     this->calculateNewMarketPrice(requestedResources);
+
+    this->factories->calculateProfit(marketPrice);
 }

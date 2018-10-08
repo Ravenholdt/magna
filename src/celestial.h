@@ -19,6 +19,7 @@ protected:
 
 public:
     string name;
+    float population;
 
     FactoryHandler* factories = new FactoryHandler();
 
@@ -35,7 +36,7 @@ public:
 
     void calculateDemand(Resource* requestedResources);
     void produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency);
-    void consume();
+    void consume(Resource* consumedResources, Resource* efficiency = new Resource(1));
     void calculateNewMarketPrice(Resource* stockpileDemand);
     void tick();
 };

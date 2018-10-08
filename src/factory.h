@@ -57,6 +57,8 @@ public:
     ~FactoryHandler();
 
     //void produce(float planetResources[nrOfResources]);
-    //void produce(Resource* planetStockpile, Resource* planetResources);
-    void produce(Resource** planetResourcePack);
+    void produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency, Resource* planetResources);
+    //void produce(Resource** planetResourcePack);
+
+    void request(Resource* requestedResources);
 };

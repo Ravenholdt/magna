@@ -33,4 +33,9 @@ public:
     //For when a function requires all resource pointers.
     Resource **getResourcePack();
 
+    void calculateDemand(Resource* requestedResources);
+    void produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency);
+    void consume();
+    void calculateNewMarketPrice(Resource* stockpileDemand);
+    void tick();
 };

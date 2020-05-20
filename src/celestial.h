@@ -1,42 +1,52 @@
-#include <string>
+#pragma once
 
-#include "resource.h"
-#include "factory.h"
+#include <SFML/Graphics.hpp>
+
+#include <vector>
+
+#include "resources.h"
+//#include "colony.h"
 
 class Celestial
 {
-protected:
+    private:
     int id;
 
-    // The stockpile symbolize the resources that have been extracted and are accessible.
-    Resource* stockpile = new Resource();
-    // The stockpile demand is used to check the balance of avalible resources to simulate a market economy.
-    Resource* stockpileDemand = new Resource();
-    // The market price increase during a shortage of resources and decrease during a surplus.
-    Resource* marketPrice = new Resource(1);
-    // The celestial resources symbolize the materials still in the planet waiting to be extracted.
-    Resource* celestialResources = new Resource();
+    public:
+    bool isStar = false;
+    int parent;
+    float distance;
+    
+    std::vector<int> childs;
 
-public:
-    string name;
-    float population;
+    float mass;
+    float radius;
 
-    FactoryHandler* factories = new FactoryHandler();
+    std::string sprite = "GreenPlanet.png";
 
+    sf::Color color = sf::Color::Red;
+    
+    long long int orbitalPeriod=1;
+    int offset = 0;
+
+    int population = 0;
+
+    int structures[1]={0};
+    float planetaryMaterials[(int)Resources::indexRaw]={0};
+    int stockpileMaterials[(int)Resources::indexLast]={0};
+
+    Celestial(int id, int parent, float distance, float mass, float radius);
     Celestial();
     ~Celestial();
 
-    Resource* getStockpile();
-    Resource* getResources();
-    Resource* getStockpileDemand();
-    Resource* getMarketPrice();
+    //SET-GET
+    int getID(){return id;}
 
-    //For when a function requires all resource pointers.
-    Resource **getResourcePack();
+    void addChild(int);
+    int newChild(float distance, float mass, float radius);
+    void addToParent();
 
-    void calculateDemand(Resource* requestedResources);
-    void produce(Resource* consumedResources, Resource* producedResources, Resource* efficiency);
-    void consume(Resource* consumedResources, Resource* producedResources  = new Resource(), Resource* efficiency = new Resource(1));
-    void calculateNewMarketPrice(Resource* stockpileDemand);
+    sf::Vector2f orbitToPos(long long int time);
     void tick();
+    void print();
 };

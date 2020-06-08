@@ -8,12 +8,13 @@ int planetOffset = 0;
 Celestial::Celestial(){}
 Celestial::~Celestial(){}
 
-Celestial::Celestial(int id, int parent, float distance, float mass, float radius)
+Celestial::Celestial(int id, int parent, float distance, float mass, float radius, CelestialType type)
 { 
     this->id = id;
     this->parent = parent;
     this->mass = mass;
     this->distance = distance;
+    this->type = type;
 
     if (parent) this->orbitalPeriod = 2.0 * 3.14 * sqrt( pow(distance, 3) / (galaxy.celestials[parent].mass * 6.674e-11) );
 
@@ -41,9 +42,9 @@ void Celestial::addToParent()
     //std::cout << __FILE__ << ": " << __LINE__ << std::endl;
 }
 
-int Celestial::newChild(float distance, float mass, float radius)
+int Celestial::newChild(float distance, float mass, float radius, CelestialType type)
 {
-    return galaxy.newCelestial(this->id, distance, mass, radius);
+    return galaxy.newCelestial(this->id, distance, mass, radius, type);
 }
 
 sf::Vector2f Celestial::orbitToPos(long long int time)
@@ -52,7 +53,7 @@ sf::Vector2f Celestial::orbitToPos(long long int time)
 
     float orb = (float)((time + this->offset) % this->orbitalPeriod) / this->orbitalPeriod;
     float rads = orb * 6.28;
-    if (rads <= 0) rads = 1e-10;
+    if (rads == 0) rads = 1e-10;
     sf::Vector2f pos(cos(rads) * this->distance, sin(rads) * this->distance);
 
     return pos;

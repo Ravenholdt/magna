@@ -7,13 +7,15 @@
 #include "resources.h"
 //#include "colony.h"
 
+enum class CelestialType {star, planet, dwarfPlanet, moon, asteroid};
+
 class Celestial
 {
     private:
     int id;
 
     public:
-    bool isStar = false;
+    CelestialType type = CelestialType::planet;
     int parent;
     float distance;
     
@@ -35,7 +37,7 @@ class Celestial
     float planetaryMaterials[(int)Resources::indexRaw]={0};
     int stockpileMaterials[(int)Resources::indexLast]={0};
 
-    Celestial(int id, int parent, float distance, float mass, float radius);
+    Celestial(int id, int parent, float distance, float mass, float radius, CelestialType type);
     Celestial();
     ~Celestial();
 
@@ -43,7 +45,7 @@ class Celestial
     int getID(){return id;}
 
     void addChild(int);
-    int newChild(float distance, float mass, float radius);
+    int newChild(float distance, float mass, float radius, CelestialType type);
     void addToParent();
 
     sf::Vector2f orbitToPos(long long int time);

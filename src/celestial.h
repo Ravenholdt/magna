@@ -48,7 +48,8 @@ class Celestial
     int newChild(float distance, float mass, float radius, CelestialType type);
     void addToParent();
 
-    sf::Vector2f orbitToPos(long long int time);
+    sf::Vector2f orbitToPosSystem(long long int time);
+    sf::Vector2f orbitToPosParent(long long int time);
     void tick();
     void print();
 };

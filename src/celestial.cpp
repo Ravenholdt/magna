@@ -47,7 +47,16 @@ int Celestial::newChild(float distance, float mass, float radius, CelestialType 
     return galaxy.newCelestial(this->id, distance, mass, radius, type);
 }
 
-sf::Vector2f Celestial::orbitToPos(long long int time)
+sf::Vector2f Celestial::orbitToPosSystem(long long int time)
+{
+    if (!parent) return sf::Vector2f(0,0); // This celestial is the center of the system
+
+    sf::Vector2f parentPos = galaxy.celestials[parent].orbitToPosSystem(time);
+    sf::Vector2f pos = this->orbitToPosParent(time);
+    return sf::Vector2f(parentPos.x + pos.x, parentPos.y + pos.y);
+}
+
+sf::Vector2f Celestial::orbitToPosParent(long long int time)
 {
     if (!this->parent) return sf::Vector2f(0,0);
 

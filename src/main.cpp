@@ -46,7 +46,8 @@ int main()
     int windowHeight = sf::VideoMode::getDesktopMode().height;
     int windowWidth = sf::VideoMode::getDesktopMode().width;
 
-    sf::Vector2f renderOffset = sf::Vector2f(windowWidth/2, windowHeight/2);
+    sf::Vector2f renderDefaultPosition = sf::Vector2f(windowWidth/2, windowHeight/2);
+    renderSystem.renderOffset = renderDefaultPosition;
     float renderScale = 1;
 
     sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "Magna"/*, sf::Style::Fullscreen*/);
@@ -55,9 +56,12 @@ int main()
     std::cout << "Begin" << std::endl;
 
     int zoom = 0;
+    bool pause = false;
 
     while (window.isOpen())
     {
+        if(!pause) galaxy.tick += 1000;
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -67,25 +71,72 @@ int main()
             if (event.type == sf::Event::Resized)
                 window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
 
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) renderOffset.y+=10;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) renderOffset.y-=10;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) renderOffset.x+=10;
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) renderOffset.x-=10;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) renderSystem.renderOffset.y+=10;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) renderSystem.renderOffset.y-=10;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) renderSystem.renderOffset.x+=10;
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) renderSystem.renderOffset.x-=10;
+
+            if (event.type == sf::Event::KeyPressed){
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) 
+                {
+                    pause = !pause;
+                    std::cout << pause << std::endl;
+                }
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+                {
+                    renderSystem.renderOffset = renderDefaultPosition;
+                    renderSystem.zoom = 0;
+                }
+            }
+
 
             if (event.type == sf::Event::MouseButtonPressed)
             {
-                renderSystem.mouseSelected = renderSystem.mouseHoverOver;
+                renderSystem.selected.selected = renderSystem.selected.hover;
+                if (renderSystem.selected.selected != sf::Vector2i(0,0))
+                {
+                    renderSystem.selected.mouseSelectedStartPosition = renderSystem.getCelestialScreenPos(renderSystem.selected.selected.y);
+                }
+                else
+                {
+                    renderSystem.renderOffset += renderSystem.selected.mouseSelectedLastOffset;
+                }
+                
+
+                renderSystem.mouse.mouseHold = true;
+                renderSystem.mouse.mouseHoldStartPosition = sf::Mouse::getPosition(window);
+            }
+
+            if (event.type == sf::Event::MouseButtonReleased)
+            {
+                renderSystem.mouse.mouseHold = false;
+                renderSystem.renderOffset.x += renderSystem.renderMouseOffset.x;
+                renderSystem.renderOffset.y += renderSystem.renderMouseOffset.y;
+                renderSystem.renderMouseOffset = sf::Vector2f(0,0);
             }
 
             if (event.type == sf::Event::MouseWheelMoved)
             {
-                renderSystem.zoom += event.mouseWheel.delta;
+                float zoomScale = 0.02;
+                if(event.mouseWheel.delta > 0)
+                    renderSystem.zoom *= 1 + event.mouseWheel.delta * zoomScale;
+                else
+                    renderSystem.zoom /= 1 - event.mouseWheel.delta * zoomScale;
+
                 renderSystem.zoomToMouse(window, event.mouseWheel.delta);
+                /*if (renderSystem.selected.selected == sf::Vector2i(0,0)) renderSystem.zoomToMouse(window, event.mouseWheel.delta);
+                else renderSystem.zoomToCelestial(event.mouseWheel.delta);*/
             }
         }
 
+        if (renderSystem.mouse.mouseHold){
+            renderSystem.renderMouseOffset.x = sf::Mouse::getPosition(window).x - renderSystem.mouse.mouseHoldStartPosition.x;
+            renderSystem.renderMouseOffset.y = sf::Mouse::getPosition(window).y - renderSystem.mouse.mouseHoldStartPosition.y;
+            //renderSystem.renderOffset.x += (sf::Mouse::getPosition().x - mousePosLast.x);
+            //renderSystem.renderOffset.y += (sf::Mouse::getPosition().y - mousePosLast.y);
+        }
+
         window.clear();
-        renderSystem.renderOffset = renderOffset;
         renderSystem.renderSolarSystem(window, sol);
         window.display();
     }

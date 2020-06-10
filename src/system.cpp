@@ -2,7 +2,8 @@
 
 #include "galaxy.h"
 
-System::System(){}
+System::System()
+{}
 
 System::System(int id)
 {

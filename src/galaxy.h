@@ -17,6 +17,8 @@ public:
     //Galaxy(/* args */);
     //~Galaxy();
 
+    long long int tick = 0;
+
     int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newSystem();
 };

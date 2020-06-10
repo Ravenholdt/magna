@@ -31,14 +31,29 @@ public:
     float renderScaleDistance = 5e9;
     float zoom = 1;
 
-    sf::Vector2i mouseHoverOver;
-    sf::Vector2i mouseSelected;
+    struct Mouse
+    {
+        bool mouseHold = 0;
+        sf::Vector2i mouseHoldStartPosition;
+    }mouse;
+
+    struct Selected
+    {
+        sf::Vector2i hover; // x = RenderObject, y = celestial
+        sf::Vector2i selected; // x = RenderObject, y = celestial
+        sf::Vector2f mouseSelectedStartPosition;
+        sf::Vector2f mouseSelectedLastOffset;
+    }selected;
+
+    sf::Vector2i mouseToSystemPos(sf::RenderWindow& window);
 
     void renderSolarSystem(sf::RenderWindow& window, int system);
     void drawCelestials(sf::RenderWindow& window, int celestial, sf::Vector2i pos, int level);
+    sf::Vector2f getCelestialScreenPos(int celestial);
     void indexCelestials(sf::RenderWindow& window, int celestial, sf::Vector2i pos, int level);
-    sf::Vector2i mouseToSystemPos(sf::RenderWindow& window);
+
     void zoomToMouse(sf::RenderWindow& window, int zoom);
+    void zoomToCelestial(int zoom);
     
     //void 
 

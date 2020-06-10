@@ -1,1 +1,0 @@
-add_executable(magna main.cpp factory.cpp resource.cpp celestial.cpp)

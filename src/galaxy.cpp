@@ -1,4 +1,5 @@
 #include "galaxy.h"
+#include <iostream>
 
 Galaxy galaxy;
 
@@ -15,4 +16,16 @@ int Galaxy::newSystem()
     systemCounter++;
     this->systems[systemCounter] = System(systemCounter);
     return systemCounter;
+}
+
+int Galaxy::newColony()
+{
+    colonyCounter++;
+    this->colonies[colonyCounter] = Colony();
+}
+
+void Galaxy::tick()
+{
+    this->time += 1000;
+    std::cout << "Time: " << time << std::endl;
 }

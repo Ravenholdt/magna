@@ -12,6 +12,8 @@ private:
     int celestialCounter = 0;
     int systemCounter = 0;
     int colonyCounter = 0;
+
+    int shipCounter = 0;
 public:
     std::map<int, System> systems;
     std::map<int, Celestial> celestials;
@@ -25,6 +27,8 @@ public:
     int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newSystem();
     int newColony(int parent);
+
+    int newShip();
     
     void tick();
 };

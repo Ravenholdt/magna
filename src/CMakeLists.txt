@@ -6,7 +6,10 @@ add_executable(magna
     system.cpp 
     celestial.cpp 
     colony.cpp
-    resources.cpp)
+    resources.cpp
+    
+    ships.cpp
+    shipParts.cpp)
 
 target_link_libraries(magna)
 

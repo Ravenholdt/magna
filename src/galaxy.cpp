@@ -28,6 +28,12 @@ int Galaxy::newColony(int parent)
     return colonyCounter;
 }
 
+int Galaxy::newShip()
+{
+    shipCounter++;
+    return shipCounter;
+}
+
 void Galaxy::tick()
 {
     this->time += 1000;

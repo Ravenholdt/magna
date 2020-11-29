@@ -1,17 +1,9 @@
 #include <iostream>
 
-/*
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-*/
-
 #include "main.h"
-/*
-#include "render/renderSystem.h"
-#include "render/textures.h"
-*/
 #include "galaxy.h"
+
+#include "ships.h"
 
 using namespace std;
 
@@ -42,6 +34,8 @@ int main()
     initiateResources();
 
     int sol = createSol();
+
+    shipinitialization();
 
     for (int i = 1 ; i <= galaxy.celestials.size() ; i++)
     {

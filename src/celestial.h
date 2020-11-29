@@ -20,6 +20,7 @@ class Celestial
     float distance;
     
     std::vector<int> childs;
+    std::vector<int> colonies;
 
     float mass;
     float radius;
@@ -29,9 +30,11 @@ class Celestial
 
     int population = 0;
 
-    std::vector<Colony> colonies;
     float planetaryMaterials[(int)Resources::indexRaw]={0};
+
     float stockpileMaterials[(int)Resources::indexLast]={0};
+    float consumption [(int)Resources::indexLast]={0};
+    float price[(int)Resources::indexLast]={0};
 
     Celestial(int id, int parent, float distance, float mass, float radius, CelestialType type);
     Celestial();
@@ -42,8 +45,9 @@ class Celestial
 
     void addChild(int);
     int newChild(float distance, float mass, float radius, CelestialType type);
+    int newColony(int parent);
     void addToParent();
 
-    void tick();
+    void tick(long long int time);
     void print();
 };

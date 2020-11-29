@@ -1,5 +1,8 @@
-#include "galaxy.h"
+
 #include <iostream>
+#include <iterator>
+
+#include "galaxy.h"
 
 Galaxy galaxy;
 
@@ -18,14 +21,19 @@ int Galaxy::newSystem()
     return systemCounter;
 }
 
-int Galaxy::newColony()
+int Galaxy::newColony(int parent)
 {
     colonyCounter++;
-    this->colonies[colonyCounter] = Colony();
+    this->colonies[colonyCounter] = Colony(colonyCounter, parent, 0);
+    return colonyCounter;
 }
 
 void Galaxy::tick()
 {
     this->time += 1000;
     std::cout << "Time: " << time << std::endl;
+    
+    for (std::pair<int, Celestial> element : this->celestials) {
+        element.second.tick(time);
+    }
 }

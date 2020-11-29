@@ -1,9 +1,10 @@
 #pragma once
 
-#include "celestial.h"
-#include "system.h"
-
 #include <map>
+
+#include "system.h"
+#include "celestial.h"
+#include "colony.h"
 
 class Galaxy
 {
@@ -12,8 +13,8 @@ private:
     int systemCounter = 0;
     int colonyCounter = 0;
 public:
-    std::map<int, Celestial> celestials;
     std::map<int, System> systems;
+    std::map<int, Celestial> celestials;
     std::map<int, Colony> colonies;
 
     //Galaxy(/* args */);
@@ -23,7 +24,7 @@ public:
 
     int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newSystem();
-    int newColony();
+    int newColony(int parent);
     
     void tick();
 };

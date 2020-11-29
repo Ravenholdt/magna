@@ -1,6 +1,11 @@
+#pragma once
+
 #include <vector>
 
 #include "resources.h"
+#include "celestial.h"
+
+class Celestial;
 
 class Colony
 {
@@ -9,11 +14,15 @@ class Colony
 
     public:
     int owner;
+    int parent;
 
     int structure[(int)Structures::indexLast] = {0};
 
-    
+    std::vector<Production> productionQueue;
 
-    Colony(int id, int owner);
+    Colony();
+    Colony(int id, int parent, int owner);
     ~Colony();
+
+    void tick(long long int time);
 };

@@ -14,4 +14,6 @@ public:
     //~System();
 
     void addCelestial(int parent, float mass, float distance);
+
+    void tick(long long int time);
 };

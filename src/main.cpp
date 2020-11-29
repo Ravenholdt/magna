@@ -25,6 +25,7 @@ int createSol()
     p = galaxy.celestials[sun].newChild(1e11, 6e24, 6.4e6, CelestialType::planet); // Venus
     p = galaxy.celestials[sun].newChild(1.5e11, 6e24, 6.4e6, CelestialType::planet); // Earth
         galaxy.celestials[p].newChild(4e8, 1e10, 1.7e6, CelestialType::moon); // Moon
+        galaxy.celestials[p].newColony(p); // Humanity
     p = galaxy.celestials[sun].newChild(2.1e11, 6e24, 6.4e6, CelestialType::planet); // Mars
         galaxy.celestials[p].newChild(9.4e6, 1e16, 1.1e4, CelestialType::moon); // Phobos
         galaxy.celestials[p].newChild(2.3e7, 1.5e15, 6.2e3, CelestialType::moon); // Deimos
@@ -38,6 +39,8 @@ int createSol()
 
 int main()
 {
+    initiateResources();
+
     int sol = createSol();
 
     for (int i = 1 ; i <= galaxy.celestials.size() ; i++)
@@ -46,9 +49,6 @@ int main()
     }
 
     std::cout << "Begin" << std::endl;
-
-    int zoom = 0;
-    bool pause = false;
 
     while (true)
     {

@@ -11,8 +11,8 @@ Colony::Colony(int id, int parent, int owner)
     this->parent = parent;
     this->owner = owner;
 
-    this->structure[(int)Structures::mine] = 1;
-    this->structure[(int)Structures::factory] = 1;
+    this->stockpileMaterials[(int)Resources::mine] = 1;
+    this->stockpileMaterials[(int)Resources::factory] = 1;
 
     Production production;
     production.item = recipes[(int)Resources::infrastructure];
@@ -28,22 +28,21 @@ void Colony::tick(long long int time)
 {
     std::cout << "Colony: " << this->id << std::endl;
 
-    for(int s = (int)Structures::mine; s < (int)Structures::indexLast; s++)
+    for(int s = (int)Resources::mine; s < (int)Resources::indexStructure; s++)
     {
         switch (s)
         {
-        case (int)Structures::mine:
+        case (int)Resources::mine:
             for (int i = 0; i < (int)Resources::indexRaw; i++)
             {
-                galaxy.celestials[this->parent].stockpileMaterials[i] += 
-                    galaxy.celestials[this->parent].planetaryMaterials[i] * this->structure[(int)Structures::mine];
+                this->stockpileMaterials[i] += galaxy.celestials[this->parent].planetaryMaterials[i] * this->stockpileMaterials[(int)Resources::mine];
             }
             std::cout << std::endl;
             break;
 
-        case (int)Structures::factory:
+        case (int)Resources::factory:
         {
-            float productionCapacity = this->structure[(int)Structures::factory];
+            float productionCapacity = this->stockpileMaterials[(int)Resources::factory];
             int productionStep = 0;
             while (productionStep < productionQueue.size() && productionCapacity > 0)
             {
@@ -63,7 +62,7 @@ void Colony::tick(long long int time)
                     // Check if resources are avalible
                     if (this->productionQueue[productionStep].item.input[i] > 0)
                     {
-                        float newRatio = galaxy.celestials[this->parent].stockpileMaterials[i] / this->productionQueue[productionStep].item.input[i] * quota;
+                        float newRatio = this->stockpileMaterials[i] / this->productionQueue[productionStep].item.input[i] * quota;
                         galaxy.celestials[this->parent].demand[i] += this->productionQueue[productionStep].item.input[i] * quota;
                         if (newRatio < 0) { newRatio = 0; }
                         if (newRatio < ratio)
@@ -83,8 +82,8 @@ void Colony::tick(long long int time)
                 for (int i = 0; i < (int)Resources::indexLast; i++)
                 {
                     // Check if resources are avalible
-                    galaxy.celestials[this->parent].stockpileMaterials[i] -= (float)this->productionQueue[productionStep].item.input[i] * quota;
-                    galaxy.celestials[this->parent].stockpileMaterials[i] += (float)this->productionQueue[productionStep].item.output[i] * quota;
+                    this->stockpileMaterials[i] -= (float)this->productionQueue[productionStep].item.input[i] * quota;
+                    this->stockpileMaterials[i] += (float)this->productionQueue[productionStep].item.output[i] * quota;
                 }
 
                 std::cout << quota << " : " << ratio << std::endl;
@@ -108,7 +107,7 @@ void Colony::tick(long long int time)
 
     for (int i = 0; i < (int)Resources::indexLast; i++)
     {
-        std::cout << galaxy.celestials[this->parent].stockpileMaterials[i] << ", ";
+        std::cout << this->stockpileMaterials[i] << ", ";
     }
     std::cout << std::endl;
 }

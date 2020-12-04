@@ -16,7 +16,11 @@ class Colony
     int owner;
     int parent;
 
-    int structure[(int)Structures::indexLast] = {0};
+    long long int population;
+
+    float stockpileMaterials[(int)Resources::indexLast]={0};
+
+    //int structure[(int)Structures::indexLast] = {0};
 
     std::vector<Production> productionQueue;
 

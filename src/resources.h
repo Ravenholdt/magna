@@ -8,10 +8,10 @@ enum class Resources
     indexLast
 };
 
-enum class Structures
-{
-    mine, factory, indexLast
-};
+//enum class Structures
+//{
+//    mine, factory, indexLast
+//};
 
 struct Recipe
 {

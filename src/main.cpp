@@ -52,22 +52,14 @@ int main()
         std::cout << galaxy.celestials[i].parent << " <- " << galaxy.celestials[i].getID() << std::endl;
     }
 
-    //std::cout << "Distance: " << galaxy.distance(2,4) << std::endl;
-
     std::cout << "Begin" << std::endl;
 
     while (true)
     {
-        std::cout << "Day: " << galaxy.time / DAY << std::endl;
-        std::cout << "Distance: " << galaxy.distance(2,4) << std::endl;
-        float x,y;
-        galaxy.celestials[4].getPosInSystem(&x, &y, galaxy.time);
-        std::cout << "Pos: " << x << "," << y << std::endl;
-
-        std::cout << "S: " << 1 << ", M: " << MINUTE << ", H: " << HOUR << ", D: " << DAY << ", M: " << MONTH << ", Y: " << YEAR << std::endl;
-
         getchar();
         galaxy.tick(DAY);
+
+        std::cout << "Day: " << galaxy.time / DAY << std::endl;
     }
 
     return 0;

@@ -16,8 +16,11 @@ int createSol()
     p = galaxy.celestials[sun].newChild(5e10, 6e24, 6.4e6, CelestialType::planet); // Mercury
     p = galaxy.celestials[sun].newChild(1e11, 6e24, 6.4e6, CelestialType::planet); // Venus
     p = galaxy.celestials[sun].newChild(1.5e11, 6e24, 6.4e6, CelestialType::planet); // Earth
-        galaxy.celestials[p].newChild(4e8, 1e10, 1.7e6, CelestialType::moon); // Moon
+        galaxy.celestials[p].population = 10000000000;
         galaxy.celestials[p].newColony(p); // Humanity
+        m = galaxy.celestials[p].newChild(4e8, 1e10, 1.7e6, CelestialType::moon); // Moon
+        galaxy.celestials[m].population = 10000;
+        galaxy.celestials[m].newColony(m); // Humanity
     p = galaxy.celestials[sun].newChild(2.1e11, 6e24, 6.4e6, CelestialType::planet); // Mars
         galaxy.celestials[p].newChild(9.4e6, 1e16, 1.1e4, CelestialType::moon); // Phobos
         galaxy.celestials[p].newChild(2.3e7, 1.5e15, 6.2e3, CelestialType::moon); // Deimos
@@ -31,7 +34,7 @@ int createSol()
 
 int main()
 {
-    initiateResources();
+    initiateRecipes();
 
     int sol = createSol();
 

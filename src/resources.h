@@ -27,4 +27,4 @@ struct Production
 
 extern Recipe recipes[];
 
-void initiateResources();
+void initiateRecipes();

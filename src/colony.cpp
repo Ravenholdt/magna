@@ -64,6 +64,7 @@ void Colony::tick(long long int time)
                     if (this->productionQueue[productionStep].item.input[i] > 0)
                     {
                         float newRatio = galaxy.celestials[this->parent].stockpileMaterials[i] / this->productionQueue[productionStep].item.input[i] * quota;
+                        galaxy.celestials[this->parent].demand[i] += this->productionQueue[productionStep].item.input[i] * quota;
                         if (newRatio < 0) { newRatio = 0; }
                         if (newRatio < ratio)
                         {

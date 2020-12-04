@@ -5,7 +5,7 @@
 
 Recipe recipes[(int)Resources::indexLast];
 
-void initiateResources()
+void initiateRecipes()
 {
     for (int i = 0; i < (int)Resources::indexLast; i++)
     {

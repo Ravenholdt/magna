@@ -28,13 +28,15 @@ class Celestial
     long long int orbitalPeriod=1;
     int offset = 0;
 
-    int population = 0;
+    long int population = 0;
+    float infrastructure = 0;
 
     float planetaryMaterials[(int)Resources::indexRaw]={0};
 
     float stockpileMaterials[(int)Resources::indexLast]={0};
-    float consumption [(int)Resources::indexLast]={0};
-    float price[(int)Resources::indexLast]={0};
+    float demand [(int)Resources::indexLast]={0};
+    float priceBase[(int)Resources::indexLast]={0};
+    float priceMod[(int)Resources::indexLast]={0};
 
     Celestial(int id, int parent, float distance, float mass, float radius, CelestialType type);
     Celestial();

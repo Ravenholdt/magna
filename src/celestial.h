@@ -29,9 +29,6 @@ class Celestial
     long long int orbitalPeriod=1;
     int offset = 0;
 
-    long int population = 0;
-    float infrastructure = 0;
-
     float planetaryMaterials[(int)Resources::indexRaw]={0};
 
     float stockpileMaterials[(int)Resources::indexLast]={0};

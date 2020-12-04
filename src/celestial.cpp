@@ -82,22 +82,22 @@ void Celestial::tick(long long int time)
 {
     //std::cout << "Celestial: " << this->id << std::endl;
 
-    if (!(this->population || this->colonies.size())) return; // If planet is inactive, return.
+    if (!this->colonies.size()) return; // If planet is inactive, return.
 
     for (int i = 0; i < (int)Resources::indexLast; i++)
     {
         this->demand[i] = 0;
     }
 
-    float infrastructureRequirment = this->population - this->infrastructure;
-    this->demand[(int)Resources::infrastructure] += infrastructureRequirment;
-    float ratio = this->stockpileMaterials[(int)Resources::infrastructure] / infrastructureRequirment;
-    if (ratio > 0) 
-    { 
-        float buildInfrastructure = infrastructureRequirment * ratio;
-        this->stockpileMaterials[(int)Resources::infrastructure] -= buildInfrastructure;
-        this->infrastructure += buildInfrastructure;
-    }
+    //float infrastructureRequirment = this->population - this->infrastructure;
+    //this->demand[(int)Resources::infrastructure] += infrastructureRequirment;
+    //float ratio = this->stockpileMaterials[(int)Resources::infrastructure] / infrastructureRequirment;
+    //if (ratio > 0) 
+    //{ 
+    //    float buildInfrastructure = infrastructureRequirment * ratio;
+    //    this->stockpileMaterials[(int)Resources::infrastructure] -= buildInfrastructure;
+    //    this->infrastructure += buildInfrastructure;
+    //}
 
     for (int i = 0; i < this->colonies.size(); i++)
     {
@@ -118,5 +118,4 @@ void Celestial::tick(long long int time)
 
         std::cout << "Price " << i << ": " << this->priceMod[i] * this->priceBase[i] << std::endl;
     }
-    std::cout << this->infrastructure << std::endl;
 };

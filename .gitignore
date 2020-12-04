@@ -46,3 +46,4 @@ build/
 *.sln
 .vs/
 magna/
+x64/

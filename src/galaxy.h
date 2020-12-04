@@ -13,7 +13,8 @@ private:
     int systemCounter = 0;
     int colonyCounter = 0;
 
-    int shipCounter = 0;
+    long long int shipCounter = 0;
+	int fleetCounter = 0;
 public:
     std::map<int, System> systems;
     std::map<int, Celestial> celestials;
@@ -29,6 +30,8 @@ public:
     int newColony(int parent);
 
     int newShip();
+	int newFleet();
+	int Distance(int source, int target);
     
     void tick();
 };

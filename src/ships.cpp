@@ -5,14 +5,13 @@
 #include <iostream>
 #include <math.h>
 #include <vector>
-#include <string>
-
-using namespace std;
+#include <list>
+#include <map>
 
 vector<shipdesign> shipdesigns;
-
-void designconstructor(shipdesign*);
-void shipconstructor(shipdesign*, ship*);
+map<int, ship> shipmap;
+map<int,fleet> fleets;
+list<int> travelitterary;
 
 int shipinitialization()
 {
@@ -22,9 +21,21 @@ int shipinitialization()
 	partdeclaration();
 	shipdesigns.push_back(shipdesign());
 	designconstructor(&shipdesigns[1]);
-	ship shippy;
-	shipconstructor(&shipdesigns[1], &shippy);
 
+	for (int i = 0; i < 3; i++)
+		shipconstructor(&shipdesigns[1]);
+
+	fleetconstructor(&shipmap.begin()->second, galaxy.celestials[3]);
+
+	//for (map<int, ship>::iterator it = shipmap.begin(); it != shipmap.end(); ++it)
+	//	cout << it->second.name << '\n';
+
+	//cout << fleetlist.front().name << endl;
+
+	//addtofleet(&shippy, &fleety);
+
+	//movefleet(4,5,fleetlist.front());
+	
 	return 0;
 }
 
@@ -82,23 +93,75 @@ void designconstructor(shipdesign* design) {
 		cout << "profile:	" << design->profile << endl; }*/
 }
 
-void shipconstructor(shipdesign* design, ship* ship) {
+void shipconstructor(shipdesign* design) {
 	int shipCounter = galaxy.newShip();
-	ship->shipid = shipCounter;
-	ship->name = design->name;
-	ship->name.append(" ");
-	ship->name.append(to_string(ship->shipid));
-	ship->cargospace = design->cargospace;
-	ship->acceleration = design->acceleration;
+	shipmap[shipCounter].shipid = shipCounter;
+	shipmap[shipCounter].name = design->name;
+	shipmap[shipCounter].name.append(" ");
+	shipmap[shipCounter].name.append(to_string(shipmap[shipCounter].shipid));
+	shipmap[shipCounter].cargospace = design->cargospace;
+	shipmap[shipCounter].acceleration = design->acceleration;
 	for (int i = 0; i < design->partdata.size(); i++) {
-		ship->partdata.push_back(shippartinfo());
-		ship->partdata[i].partid = design->partdata[i].partid;
-		ship->partdata[i].partnum = design->partdata[i].partnum;
+		shipmap[shipCounter].partdata.push_back(shippartinfo());
+		shipmap[shipCounter].partdata[i].partid = design->partdata[i].partid;
+		shipmap[shipCounter].partdata[i].partnum = design->partdata[i].partnum;
 		int totalintegrity = 0;
-		for (int j = 0; j < ship->partdata[i].partnum ; j++) {
-			totalintegrity += parts[ship->partdata[i].partid].integrity;
+		for (int j = 0; j < shipmap[shipCounter].partdata[i].partnum ; j++) {
+			totalintegrity += parts[shipmap[shipCounter].partdata[i].partid].integrity;
 		}
-		ship->partdata[i].condition = totalintegrity;
-		//cout << ship->partdata[i].condition << endl;
+		shipmap[shipCounter].partdata[i].condition = totalintegrity;
 	}
+}
+
+void fleetconstructor(ship* ship, Celestial orbit) {
+	int fleetid = galaxy.newFleet();
+	fleets[fleetid].fleetid = fleetid;
+	fleets[fleetid].name = "Numero uno fleet";
+	fleets[fleetid].location = orbit.getID();
+	//fleets[fleetid].ships
+
+	fleetid++;
+}
+
+void addtofleet() {
+	
+}
+
+void removefromfleet() {
+
+}
+
+void deletefleet() {
+
+}
+
+void movefleet(int source, int target, fleet* fleet) {
+	long int distance = galaxy.Distance(source, target);
+	int i = 1, starFinder = source;
+	/*
+	cout << "transit data: ";
+	cout << (int)galaxy.celestials[galaxy.celestials[starFinder].parent].type << "	";	//0 star, 1 planet, 2 dwarfPlanet, 3 moon, 4 asteroid
+	cout << (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID() << "	";
+	*/
+	while (i > 0) {// departure, ska det verkligen vara så här mycket kod för att hitta stjärnan i systemet?
+		if ((int)galaxy.celestials[galaxy.celestials[starFinder].parent].type == (int)CelestialType::star) {
+			fleet->location = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
+			i = 0;
+		}
+		else {
+			starFinder = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
+			i++;
+			if (i > 100) i = 0;
+		}
+	}
+	//cout << fleet->location << endl;
+	
+	fleet->arrivaltime = galaxy.time; + (distance/fleet->travelspeed);
+	//travelitterary.push_back(fleet);//lägger flottan i en lista som ittereras över lite då och då för att koll om något kommit fram.
+	
+	
+}
+
+void arrivalcheck(){// TODO		//göra om alla lists till maps?
+	//something something traveliterary
 }

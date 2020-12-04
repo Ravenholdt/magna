@@ -3,6 +3,7 @@
 #include <iterator>
 
 #include "galaxy.h"
+#include "ships.h"
 
 Galaxy galaxy;
 
@@ -34,6 +35,17 @@ int Galaxy::newShip()
     return shipCounter;
 }
 
+int Galaxy::newFleet() 
+{
+	fleetCounter++;
+	return fleetCounter;
+}
+
+int Galaxy::Distance(int source, int target)// TODO
+{
+	return 100000;//100 000
+}
+
 void Galaxy::tick()
 {
     this->time += 1000;
@@ -42,4 +54,5 @@ void Galaxy::tick()
     for (std::pair<int, Celestial> element : this->celestials) {
         element.second.tick(time);
     }
+	
 }

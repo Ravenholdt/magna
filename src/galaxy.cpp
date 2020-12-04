@@ -54,5 +54,6 @@ void Galaxy::tick()
     for (std::pair<int, Celestial> element : this->celestials) {
         element.second.tick(time);
     }
+	arrivalcheck();
 	
 }

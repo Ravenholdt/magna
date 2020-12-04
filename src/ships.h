@@ -44,14 +44,15 @@ struct fleet {
 	int fleetid;
 	long int cargospace;
 	int resources[(int)Resources::indexLast];
-	std::list<ship*> ships;
+	std::list<int> ships;
 	int location = 0;
 	int travelspeed = 1;
 	long long int arrivaltime;
+	int target = 0;
 };
 
 extern std::map<int,fleet> fleets;
-extern std::list<int> travelitterary;//list of all fleets in transit
+extern std::map<int, int> travelitterary;//list of all fleets in transit
 
 int shipinitialization();
 void designconstructor(shipdesign*);
@@ -61,5 +62,6 @@ void fleetconstructor(ship*, Celestial);
 void addtofleet();
 void removefromfleet();
 void deletefleet();
-void movefleet(int source, int target, fleet* fleet);
+void movefleet(int, int, int);
+void arrivalcheck();
 

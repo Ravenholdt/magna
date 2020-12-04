@@ -9,9 +9,9 @@
 #include <map>
 
 vector<shipdesign> shipdesigns;
-map<int, ship> shipmap;
+map<int,ship> shipmap;
 map<int,fleet> fleets;
-list<int> travelitterary;
+map<int,int> travelitterary;
 
 int shipinitialization()
 {
@@ -25,17 +25,16 @@ int shipinitialization()
 	for (int i = 0; i < 3; i++)
 		shipconstructor(&shipdesigns[1]);
 
-	fleetconstructor(&shipmap.begin()->second, galaxy.celestials[3]);
+	fleetconstructor(&shipmap[1], galaxy.celestials[4]);
+	fleetconstructor(&shipmap[2], galaxy.celestials[4]);
 
 	//for (map<int, ship>::iterator it = shipmap.begin(); it != shipmap.end(); ++it)
 	//	cout << it->second.name << '\n';
 
-	//cout << fleetlist.front().name << endl;
+	movefleet(4, 5, 1);
 
-	//addtofleet(&shippy, &fleety);
+	arrivalcheck();
 
-	//movefleet(4,5,fleetlist.front());
-	
 	return 0;
 }
 
@@ -135,9 +134,11 @@ void deletefleet() {
 
 }
 
-void movefleet(int source, int target, fleet* fleet) {
-	long int distance = galaxy.Distance(source, target);
+void movefleet(int source, int target, int id) {
+	float distance = galaxy.Distance(source, target);
 	int i = 1, starFinder = source;
+	fleets[id].target = target;
+	//cout << "Location earth	" << fleets[1].location << endl;
 	/*
 	cout << "transit data: ";
 	cout << (int)galaxy.celestials[galaxy.celestials[starFinder].parent].type << "	";	//0 star, 1 planet, 2 dwarfPlanet, 3 moon, 4 asteroid
@@ -145,23 +146,40 @@ void movefleet(int source, int target, fleet* fleet) {
 	*/
 	while (i > 0) {// departure, ska det verkligen vara så här mycket kod för att hitta stjärnan i systemet?
 		if ((int)galaxy.celestials[galaxy.celestials[starFinder].parent].type == (int)CelestialType::star) {
-			fleet->location = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
+			fleets[id].location = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
 			i = 0;
 		}
 		else {
 			starFinder = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
 			i++;
-			if (i > 100) i = 0;
+			if (i > 10) i = 0;
 		}
 	}
-	//cout << fleet->location << endl;
+	//cout << "Location star	" <<fleets[1].location << endl;
+	//cout << "target moon	" << fleets[1].target << endl;
 	
-	fleet->arrivaltime = galaxy.time; + (distance/fleet->travelspeed);
-	//travelitterary.push_back(fleet);//lägger flottan i en lista som ittereras över lite då och då för att koll om något kommit fram.
-	
+	fleets[id].arrivaltime = galaxy.time + (distance / fleets[id].travelspeed);
+	travelitterary[id] = id;
+
+	//cout << "Arrival time	" << fleets[1].arrivaltime << endl;
 	
 }
 
-void arrivalcheck(){// TODO		//göra om alla lists till maps?
-	//something something traveliterary
+void arrivalcheck(){// dos not werk yet
+	list<int> markfordelete;
+	for (map<int, int>::iterator it = travelitterary.begin(); it != travelitterary.end(); ++it) {
+		//cout << it->second << '\n';
+		if (fleets[it->second].arrivaltime <= galaxy.time) {
+			fleets[it->second].arrivaltime = 0;
+			fleets[it->second].location = fleets[it->second].target;
+			fleets[it->second].target = 0;
+			markfordelete.push_back(it->second);
+			//cout << "Arrival" << endl;
+		}
+	}
+	for (list<int>::iterator it = markfordelete.begin(); it != markfordelete.end(); ++it) {
+		travelitterary.erase(*it);
+		//cout << *it << " " << endl;
+	}
+	//cout << "Location:	" << fleets[1].location <<endl;
 }

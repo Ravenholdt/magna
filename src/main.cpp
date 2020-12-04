@@ -7,12 +7,19 @@
 
 using namespace std;
 
+#define MINUTE  60
+#define HOUR    3600
+#define DAY     86400
+#define WEEK    604800
+#define MONTH   2628000
+#define YEAR    31540000
+
 int createSol()
 {
     int sol = galaxy.newSystem();
     int sun = galaxy.systems[sol].star;
 
-    int p;
+    int p, m;
     p = galaxy.celestials[sun].newChild(5e10, 6e24, 6.4e6, CelestialType::planet); // Mercury
     p = galaxy.celestials[sun].newChild(1e11, 6e24, 6.4e6, CelestialType::planet); // Venus
     p = galaxy.celestials[sun].newChild(1.5e11, 6e24, 6.4e6, CelestialType::planet); // Earth
@@ -45,12 +52,22 @@ int main()
         std::cout << galaxy.celestials[i].parent << " <- " << galaxy.celestials[i].getID() << std::endl;
     }
 
+    //std::cout << "Distance: " << galaxy.distance(2,4) << std::endl;
+
     std::cout << "Begin" << std::endl;
 
     while (true)
     {
+        std::cout << "Day: " << galaxy.time / DAY << std::endl;
+        std::cout << "Distance: " << galaxy.distance(2,4) << std::endl;
+        float x,y;
+        galaxy.celestials[4].getPosInSystem(&x, &y, galaxy.time);
+        std::cout << "Pos: " << x << "," << y << std::endl;
+
+        std::cout << "S: " << 1 << ", M: " << MINUTE << ", H: " << HOUR << ", D: " << DAY << ", M: " << MONTH << ", Y: " << YEAR << std::endl;
+
         getchar();
-        galaxy.tick();
+        galaxy.tick(DAY);
     }
 
     return 0;

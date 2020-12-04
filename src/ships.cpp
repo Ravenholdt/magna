@@ -135,7 +135,7 @@ void deletefleet() {
 }
 
 void movefleet(int source, int target, int id) {
-	float distance = galaxy.Distance(source, target);
+	float distance = galaxy.distance(source, target);
 	int i = 1, starFinder = source;
 	fleets[id].target = target;
 	//cout << "Location earth	" << fleets[1].location << endl;
@@ -144,7 +144,7 @@ void movefleet(int source, int target, int id) {
 	cout << (int)galaxy.celestials[galaxy.celestials[starFinder].parent].type << "	";	//0 star, 1 planet, 2 dwarfPlanet, 3 moon, 4 asteroid
 	cout << (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID() << "	";
 	*/
-	while (i > 0) {// departure, ska det verkligen vara så här mycket kod för att hitta stjärnan i systemet?
+	while (i > 0) {// departure, ska det verkligen vara sï¿½ hï¿½r mycket kod fï¿½r att hitta stjï¿½rnan i systemet?
 		if ((int)galaxy.celestials[galaxy.celestials[starFinder].parent].type == (int)CelestialType::star) {
 			fleets[id].location = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
 			i = 0;

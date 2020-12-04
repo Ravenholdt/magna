@@ -31,9 +31,9 @@ public:
 
     int newShip();
 	int newFleet();
-	int Distance(int source, int target);
+	float distance(int source, int target);
     
-    void tick();
+    void tick(long long int timeStep);
 };
 
 extern Galaxy galaxy;

@@ -41,14 +41,23 @@ int Galaxy::newFleet()
 	return fleetCounter;
 }
 
-int Galaxy::Distance(int source, int target)// TODO
+float Galaxy::distance(int source, int target)
 {
-	return 100000;//100 000
+    float sx, sy, tx, ty;
+    float dx, dy;
+
+    galaxy.celestials[source].getPosInSystem(&sx, &sy, galaxy.time);
+    galaxy.celestials[target].getPosInSystem(&tx, &ty, galaxy.time);
+
+    dx = abs(sx - tx);
+    dy = abs(sy - ty);
+
+    return sqrt(pow(dx, 2)+pow(dy, 2));
 }
 
-void Galaxy::tick()
+void Galaxy::tick(long long int timeStep)
 {
-    this->time += 1000;
+    this->time += timeStep;
     std::cout << "Time: " << time << std::endl;
     
     for (std::pair<int, Celestial> element : this->celestials) {

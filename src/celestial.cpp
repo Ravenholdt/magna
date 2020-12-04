@@ -55,6 +55,29 @@ int Celestial::newColony(int parent)
     return c;
 }
 
+void Celestial::getPosInSystem(float* x, float* y, long long int time)
+{
+    *x = 0;
+    *y = 0;
+
+    int current = this->id;
+    int parent;
+
+    double pi = 3.14159265;
+    double placeInOrbit;
+    while (galaxy.celestials[current].parent)
+    {   
+        parent = galaxy.celestials[current].parent;
+
+        placeInOrbit = (time % galaxy.celestials[current].orbitalPeriod) / (float)galaxy.celestials[current].orbitalPeriod;
+
+        *x = (cos(placeInOrbit * 360. * (pi/180.)) * (double)galaxy.celestials[current].distance);
+        *y = (sin(placeInOrbit * 360. * (pi/180.)) * (double)galaxy.celestials[current].distance);
+
+        current = parent;
+    }
+}
+
 void Celestial::tick(long long int time)
 {
     //std::cout << "Celestial: " << this->id << std::endl;

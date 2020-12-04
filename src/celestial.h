@@ -6,6 +6,7 @@
 
 #include "resources.h"
 #include "colony.h"
+#include "galaxy.h"
 
 enum class CelestialType {star, planet, dwarfPlanet, moon, asteroid};
 
@@ -49,6 +50,8 @@ class Celestial
     int newChild(float distance, float mass, float radius, CelestialType type);
     int newColony(int parent);
     void addToParent();
+
+    void getPosInSystem(float* x, float* y, long long int time);
 
     void tick(long long int time);
     void print();

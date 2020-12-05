@@ -41,3 +41,9 @@ CTestTestfile.cmake
 # Others
 .idea
 build/
+
+# Visual Studio
+*.sln
+.vs/
+magna/
+x64/

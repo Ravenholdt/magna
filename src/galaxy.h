@@ -6,6 +6,15 @@
 #include "celestial.h"
 #include "colony.h"
 
+#define MINUTE  60
+#define HOUR    3600
+#define DAY     86400
+#define WEEK    604800
+#define MONTH   2628000
+#define YEAR    31540000
+
+#define KM      1000
+
 class Galaxy
 {
 private:

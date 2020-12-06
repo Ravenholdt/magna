@@ -27,7 +27,15 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
         this->priceBase[i] = 1;
         this->priceMod[i] = 1;
     }
+
+    this->gravity();
 };
+
+float Celestial::gravity()
+{
+    float G = 6.67408e-11;
+    return G * this->mass / pow(this->radius, 2);
+}
 
 void Celestial::addChild(int child)
 {
@@ -109,13 +117,13 @@ void Celestial::tick(long long int time)
         this->priceBase[i] = 1;
     }
 
-    for (int i = 0; i < (int)Resources::indexLast; i++)
-    {
-        this->priceMod[i] *= this->demand[i] / this->stockpileMaterials[i];
-        if (this->stockpileMaterials[i] <= 0) { this->priceMod[i] = this->priceBase[i] * 100; }
-        if (this->priceMod[i] < (this->priceBase[i] / 100)) { this->priceMod[i] = this->priceBase[i] / 100; }
-        if (this->priceMod[i] > (this->priceBase[i] * 100)) { this->priceMod[i] = this->priceBase[i] * 100; }
-
-        std::cout << "Price " << i << ": " << this->priceMod[i] * this->priceBase[i] << std::endl;
-    }
+//    for (int i = 0; i < (int)Resources::indexLast; i++)
+//    {
+//        this->priceMod[i] *= this->demand[i] / this->stockpileMaterials[i];
+//        if (this->stockpileMaterials[i] <= 0) { this->priceMod[i] = this->priceBase[i] * 100; }
+//        if (this->priceMod[i] < (this->priceBase[i] / 100)) { this->priceMod[i] = this->priceBase[i] / 100; }
+//        if (this->priceMod[i] > (this->priceBase[i] * 100)) { this->priceMod[i] = this->priceBase[i] * 100; }
+//
+//        std::cout << "Price " << i << ": " << this->priceMod[i] * this->priceBase[i] << std::endl;
+//    }
 };

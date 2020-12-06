@@ -19,6 +19,9 @@ class Celestial
     CelestialType type = CelestialType::planet;
     int parent;
     float distance;
+
+    float atmosphere = 0;
+    float habitability;
     
     std::vector<int> childs;
     std::vector<int> colonies;
@@ -42,6 +45,7 @@ class Celestial
 
     //SET-GET
     int getID(){return id;}
+    float gravity();
 
     void addChild(int);
     int newChild(float distance, float mass, float radius, CelestialType type);

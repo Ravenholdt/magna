@@ -19,14 +19,18 @@ class Colony
     long long int population;
 
     float stockpileMaterials[(int)Resources::indexLast]={0};
+    float production[(int)Resources::indexLast]={0};
+    float requests[(int)Resources::indexLast]={0};
 
-    //int structure[(int)Structures::indexLast] = {0};
+    long long int lastProduce;
 
-    std::vector<Production> productionQueue;
+    std::vector<int> shipHangar;
 
     Colony();
     Colony(int id, int parent, int owner);
     ~Colony();
+
+    void produce();
 
     void tick(long long int time);
 };

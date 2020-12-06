@@ -15,10 +15,12 @@ struct partinfo {//partlists for shipdesigns, so it lacks current condition,
 	int partid = -1, partnum = 0;
 };
 struct shipdesign {
+	int designid = 0;
 	string name = "Deafult_design_error";
 	long int volume = 0, mass = 0, integrity = 0;
 	int minimumcrew = 0, crewcapacity = 0, power = 0, energystorage = 0, cargospace, thrust = 0;
-	
+	int drivespeed = 0;
+	float stressresistence = 0;
 	float acceleration = 0, profile = -1;
 	vector<partinfo> partdata;
 };
@@ -30,10 +32,12 @@ struct shippartinfo {//partlists for ships
 };
 struct ship {
 	string name = "Unknown";
-	int shipid = 0;
+	int shipid = 0, designid = 0, fleetid = 0;
 	int cargospace = 0;
 	int cargomass = 0;
+	int damage = 0;
 	float acceleration = 0;
+	
 	vector<shippartinfo> partdata;
 };
 
@@ -44,23 +48,24 @@ struct fleet {
 	int fleetid;
 	long int cargospace;
 	int resources[(int)Resources::indexLast];
-	std::list<int> ships;
+	map<int, int> ships;
 	int location = 0;
 	int travelspeed = 1;
 	long long int arrivaltime;
 	int target = 0;
+	
 };
 
 extern std::map<int,fleet> fleets;
 extern std::map<int, int> travelitterary;//list of all fleets in transit
 
 int shipinitialization();
-void designconstructor(shipdesign*);
+void designconstructor(shipdesign*, int);
 void shipconstructor(shipdesign*);
 
 void fleetconstructor(ship*, Celestial);
-void addtofleet();
-void removefromfleet();
+void addtofleet(fleet*, ship*);
+void removefromfleet(fleet*, ship*);
 void deletefleet();
 void movefleet(int, int, int);
 void arrivalcheck();

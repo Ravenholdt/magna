@@ -38,6 +38,14 @@ void partdeclaration() {
 	parts[(int)PartID::cargospace].mass = 1000;
 	parts[(int)PartID::cargospace].integrity = 10;
 	parts[(int)PartID::cargospace].cargospace = 10;
+
+	parts[(int)PartID::systemdrive].volume = 1;
+	parts[(int)PartID::systemdrive].mass = 200;
+	parts[(int)PartID::systemdrive].integrity = 5;
+	parts[(int)PartID::systemdrive].crew = 0;
+	parts[(int)PartID::systemdrive].power = -20;
+	parts[(int)PartID::systemdrive].drivespeed = 150;
+	parts[(int)PartID::systemdrive].drivefield = 4;
 	
 }
 

@@ -16,18 +16,29 @@ map<int,int> travelitterary;
 int shipinitialization()
 {
     //cout << cbrt(2) << "\n";
-	shipdesigns.push_back(shipdesign());
-	shipdesigns[0].name = "Deafult_design_error";
 	partdeclaration();
 	shipdesigns.push_back(shipdesign());
-	designconstructor(&shipdesigns[1]);
+	shipdesigns[0].name = "Deafult_design_error";
+	
+	{
+		shipdesigns.push_back(shipdesign());
+		int designid = galaxy.newShipDesign();
+		designconstructor(&shipdesigns[designid], designid);
+	}
 
 	for (int i = 0; i < 3; i++)
 		shipconstructor(&shipdesigns[1]);
 
 	fleetconstructor(&shipmap[1], galaxy.celestials[4]);
-	fleetconstructor(&shipmap[2], galaxy.celestials[4]);
 
+	addtofleet(&fleets[1], &shipmap[2]);
+
+	removefromfleet(&fleets[1], &shipmap[1]);
+	/*
+	for (std::pair<int, int> ships : fleets[1].ships) {
+		cout << ships.second << endl;
+	}
+	*/
 	//for (map<int, ship>::iterator it = shipmap.begin(); it != shipmap.end(); ++it)
 	//	cout << it->second.name << '\n';
 
@@ -38,7 +49,7 @@ int shipinitialization()
 	return 0;
 }
 
-void designconstructor(shipdesign* design) {
+void designconstructor(shipdesign* design, int id) {
 
 	for (int i = 0; i <= (int)PartID::partindex; i++) {
 		design->partdata.push_back(partinfo());
@@ -60,6 +71,9 @@ void designconstructor(shipdesign* design) {
 
 	design->partdata[5].partid = (int)PartID::cargospace;
 	design->partdata[5].partnum = 4;
+
+	design->partdata[6].partid = (int)PartID::systemdrive;
+	design->partdata[6].partnum = 10;
 	
 	for (int i = 0; i < (int)PartID::partindex; i++) {
 		design->volume += (parts[design->partdata[i].partid].volume*design->partdata[i].partnum);
@@ -71,10 +85,13 @@ void designconstructor(shipdesign* design) {
 		design->energystorage += (parts[design->partdata[i].partid].energystorage * design->partdata[i].partnum);
 		design->cargospace += (parts[design->partdata[i].partid].cargospace * design->partdata[i].partnum);
 		design->thrust += (parts[design->partdata[i].partid].thrust * design->partdata[i].partnum);
-
+		if (design->drivespeed < (parts[design->partdata[i].partid].drivespeed))
+			design->drivespeed = (parts[design->partdata[i].partid].drivespeed);
 	}
+	design->designid = id;
 	design->acceleration = ((float)design->thrust / ((float)design->mass/1000.0));
 	design->profile = std::pow(std::pow(design->volume, 1 / 3.), 2.);
+	design->stressresistence = std::pow(std::pow(design->integrity, 1 / 3.), 2.);
 	design->name = "Relianze";
 
 	/*{
@@ -94,12 +111,19 @@ void designconstructor(shipdesign* design) {
 
 void shipconstructor(shipdesign* design) {
 	int shipCounter = galaxy.newShip();
-	shipmap[shipCounter].shipid = shipCounter;
-	shipmap[shipCounter].name = design->name;
+	shipmap[shipCounter].shipid = shipCounter;	//id
+	
+	shipmap[shipCounter].name = design->name;	//name
 	shipmap[shipCounter].name.append(" ");
 	shipmap[shipCounter].name.append(to_string(shipmap[shipCounter].shipid));
+	
 	shipmap[shipCounter].cargospace = design->cargospace;
 	shipmap[shipCounter].acceleration = design->acceleration;
+	if (shipmap[shipCounter].acceleration > ((design->stressresistence * 1000) / design->mass))
+		shipmap[shipCounter].acceleration = ((design->stressresistence * 1000) / design->mass);
+
+	shipmap[shipCounter].designid = design->designid;
+
 	for (int i = 0; i < design->partdata.size(); i++) {
 		shipmap[shipCounter].partdata.push_back(shippartinfo());
 		shipmap[shipCounter].partdata[i].partid = design->partdata[i].partid;
@@ -110,6 +134,12 @@ void shipconstructor(shipdesign* design) {
 		}
 		shipmap[shipCounter].partdata[i].condition = totalintegrity;
 	}
+	/*
+	cout << "Stressresist:	" << design->stressresistence << endl;
+	cout << "Mass:	" << design->mass << endl;
+	cout << "Acc:	" << shipmap[shipCounter].acceleration << endl;
+	cout << "Profile:	" << shipdesigns[shipmap[shipCounter].designid].profile << endl;
+	*/
 }
 
 void fleetconstructor(ship* ship, Celestial orbit) {
@@ -117,17 +147,19 @@ void fleetconstructor(ship* ship, Celestial orbit) {
 	fleets[fleetid].fleetid = fleetid;
 	fleets[fleetid].name = "Numero uno fleet";
 	fleets[fleetid].location = orbit.getID();
-	//fleets[fleetid].ships
-
-	fleetid++;
+	fleets[fleetid].travelspeed = shipdesigns[ship->designid].drivespeed;
+	fleets[fleetid].ships[ship->shipid] = ship->shipid;
+	ship->fleetid = fleetid;
 }
 
-void addtofleet() {
-	
+void addtofleet(fleet* fleet, ship* ship) {
+	fleet->ships[ship->shipid] = ship->shipid;
+	ship->fleetid = fleet->fleetid;
 }
 
-void removefromfleet() {
-
+void removefromfleet(fleet* fleet, ship* ship) {
+	fleet->ships.erase(ship->shipid);
+	///ship->fleetid = 0;	//fix later put to its new location
 }
 
 void deletefleet() {

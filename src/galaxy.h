@@ -15,6 +15,7 @@ private:
 
     long long int shipCounter = 0;
 	int fleetCounter = 0;
+	int shipDesignCounter = 0;
 public:
     std::map<int, System> systems;
     std::map<int, Celestial> celestials;
@@ -31,6 +32,7 @@ public:
 
     int newShip();
 	int newFleet();
+	int newShipDesign();
 	float distance(int source, int target);
     
     void tick(long long int timeStep);

@@ -41,6 +41,11 @@ int Galaxy::newFleet()
 	return fleetCounter;
 }
 
+int Galaxy::newShipDesign() {
+	shipDesignCounter++;
+	return shipDesignCounter;
+}
+
 float Galaxy::distance(int source, int target)
 {
     float sx, sy, tx, ty;

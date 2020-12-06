@@ -36,5 +36,10 @@ class Colony
     void produce();
 
     void tick(long long int time);
+    void tickDaily();
+    void tickWeekly();
+    void tickMonthly();
+    void tickYearly();
+
 	void popCalculator();
 };

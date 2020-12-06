@@ -55,5 +55,10 @@ class Celestial
     void getPosInSystem(float* x, float* y, long long int time);
 
     void tick(long long int time);
+    void tickDaily();
+    void tickWeekly();
+    void tickMonthly();
+    void tickYearly();
+
     void print();
 };

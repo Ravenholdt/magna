@@ -67,27 +67,76 @@ void Galaxy::tick(long long int timeStep)
     std::cout << "Time: " << time << std::endl;
 	
 	while (this->time < end) {
+        if (this->hour < (int)(this->time / HOUR)) //day
+		{
+			this->hour++;
+			
+            this->tickHourly();
+		}
+
 		if (this->day < (int)(this->time / DAY)) //day
 		{
 			this->day++;
 			cout << "New day:	" << this->day << endl;
-			for (std::pair<int, Celestial> element : this->celestials) {
-				element.second.tick(time);
-			}
-			arrivalcheck();
+			
+            this->tickDaily();
+		}
+
+        if (this->week < (int)(this->time / WEEK))// moth
+		{
+			this->week++;
+			cout << "New week:	" << this->week << endl;
+
+            this->tickWeekly();
 		}
 
 		if (this->month < (int)(this->time / MONTH))// moth
 		{
 			this->month++;
 			cout << "New month:	" << this->month << endl;
+
+            this->tickMonthly();
 		}
 
 		if (this->year < (int)(this->time / YEAR)) {// year
 			this->year++;
 			cout << "New year:	" << this->year << endl;
+
+            this->tickYearly();
 		}
 		this->time += HOUR;
 	}
 	
+}
+
+void Galaxy::tickHourly()
+{
+    arrivalcheck();
+}
+
+void Galaxy::tickDaily()
+{
+    for (std::pair<int, Celestial> element : this->celestials) {
+        element.second.tickDaily();
+    }
+}
+
+void Galaxy::tickWeekly()
+{
+    //for (std::pair<int, Celestial> element : this->celestials) {
+    //    element.second.tickWeekly();
+    //}
+}
+
+void Galaxy::tickMonthly()
+{
+    for (std::pair<int, Celestial> element : this->celestials) {
+        element.second.tickMonthly();
+    }
+}
+void Galaxy::tickYearly()
+{
+    //for (std::pair<int, Celestial> element : this->celestials) {
+    //    element.second.tickYearly();
+    //}
 }

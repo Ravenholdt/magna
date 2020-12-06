@@ -34,9 +34,11 @@ public:
     //~Galaxy();
 
     long long int time = 0;
-	int day = 0;
-	int month = 0;
-	int year = 0;
+    long long int hour = 0;
+	long long int day = 0;
+    long long int week = 0;
+	long long int month = 0;
+	long long int year = 0;
 
     int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newSystem();
@@ -48,6 +50,12 @@ public:
 	float distance(int source, int target);
     
     void tick(long long int timeStep);
+
+    void tickHourly();
+    void tickDaily();
+    void tickWeekly();
+    void tickMonthly();
+    void tickYearly();
 };
 
 extern Galaxy galaxy;

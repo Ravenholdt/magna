@@ -127,3 +127,23 @@ void Celestial::tick(long long int time)
 //        std::cout << "Price " << i << ": " << this->priceMod[i] * this->priceBase[i] << std::endl;
 //    }
 };
+
+void Celestial::tickDaily()
+{
+    if (!this->colonies.size()) return; // If planet is inactive, return.
+
+    for (int i = 0; i < this->colonies.size(); i++)
+    {
+        galaxy.colonies[this->colonies[i]].tickDaily();
+    }
+}
+
+void Celestial::tickMonthly()
+{
+    if (!this->colonies.size()) return; // If planet is inactive, return.
+
+    for (int i = 0; i < this->colonies.size(); i++)
+    {
+        galaxy.colonies[this->colonies[i]].tickMonthly();
+    }
+}

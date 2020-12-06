@@ -61,7 +61,24 @@ void Colony::produce()
     }
 }
 
-void Colony::tick(long long int time)
+void Colony::popCalculator() {
+	long long int pop = this->population;
+	long long int deaths = pop / this->lifespan;
+	long long int growth = pop * this->growthmod;
+	this->population -= deaths;
+	this->population += growth;
+	/*std::cout << endl;
+	std::cout << "Pop:	" << pop << endl;
+	std::cout << "deaths:	" << deaths << endl;
+	std::cout << "growth:	" << growth << endl;
+	
+	std::cout << endl;*/
+	std::cout << "newpop:	" << this->population << endl;;
+}
+
+void Colony::tick(long long int time){}
+
+void Colony::tickDaily()
 {
     std::cout << "Colony: " << this->id << std::endl;
     
@@ -90,22 +107,9 @@ void Colony::tick(long long int time)
         std::cout << this->production[i] << ", ";
     }
     std::cout << std::endl;
-
-	this->popCalculator();
-
 }
 
-void Colony::popCalculator() {
-	long long int pop = this->population;
-	long long int deaths = pop / this->lifespan;
-	long long int growth = pop * this->growthmod;
-	this->population -= deaths;
-	this->population += growth;
-	/*std::cout << endl;
-	std::cout << "Pop:	" << pop << endl;
-	std::cout << "deaths:	" << deaths << endl;
-	std::cout << "growth:	" << growth << endl;
-	
-	std::cout << endl;*/
-	std::cout << "newpop:	" << this->population << endl;;
+void Colony::tickMonthly()
+{
+    this->popCalculator();
 }

@@ -50,7 +50,7 @@ int main()
     while (true)
     {
         getchar();
-        galaxy.tick(HOUR);
+        galaxy.tick(DAY);
 
         std::cout << "Day: " << galaxy.time / (float)DAY << std::endl;
     }

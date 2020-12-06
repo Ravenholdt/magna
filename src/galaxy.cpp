@@ -62,12 +62,32 @@ float Galaxy::distance(int source, int target)
 
 void Galaxy::tick(long long int timeStep)
 {
-    this->time += timeStep;
+    //this->time += timeStep;
+	long long int end = timeStep + this->time;
     std::cout << "Time: " << time << std::endl;
-    
-    for (std::pair<int, Celestial> element : this->celestials) {
-        element.second.tick(time);
-    }
-	arrivalcheck();
+	
+	while (this->time < end) {
+		if (this->day < (int)(this->time / DAY)) //day
+		{
+			this->day++;
+			cout << "New day:	" << this->day << endl;
+			for (std::pair<int, Celestial> element : this->celestials) {
+				element.second.tick(time);
+			}
+			arrivalcheck();
+		}
+
+		if (this->month < (int)(this->time / MONTH))// moth
+		{
+			this->month++;
+			cout << "New month:	" << this->month << endl;
+		}
+
+		if (this->year < (int)(this->time / YEAR)) {// year
+			this->year++;
+			cout << "New year:	" << this->year << endl;
+		}
+		this->time += HOUR;
+	}
 	
 }

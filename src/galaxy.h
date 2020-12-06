@@ -34,6 +34,9 @@ public:
     //~Galaxy();
 
     long long int time = 0;
+	int day = 0;
+	int month = 0;
+	int year = 0;
 
     int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newSystem();

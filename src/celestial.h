@@ -46,6 +46,7 @@ class Celestial
     //SET-GET
     int getID(){return id;}
     float gravity();
+    float deltaV();
 
     void addChild(int);
     int newChild(float distance, float mass, float radius, CelestialType type);

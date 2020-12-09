@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "galaxy.h"
+#include "algorithms.h"
 
 int planetOffset = 0;
 
@@ -12,13 +13,14 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
 { 
     this->id = id;
     this->parent = parent;
-    this->mass = mass;
     this->distance = distance;
+    this->mass = mass;
+    this->radius = radius;
     this->type = type;
 
     if (parent) 
     {
-        this->orbitalPeriod = 2.0 * 3.14 * sqrt( pow(distance, 3) / (galaxy.celestials[this->parent].mass * 6.674e-11) );
+        this->orbitalPeriod = calculateOrbitalPeriod(galaxy.celestials[this->parent].mass, distance);
     }
 
     for(int i = 0; i < (int)Resources::indexRaw; i++)
@@ -31,11 +33,8 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
     this->gravity();
 };
 
-float Celestial::gravity()
-{
-    float G = 6.67408e-11;
-    return G * this->mass / pow(this->radius, 2);
-}
+float Celestial::gravity() { return calculateGravity(this->mass, this->radius); }
+float Celestial::deltaV() { return calculateDeltaV(this->mass, this->radius, this->atmosphere); }
 
 void Celestial::addChild(int child)
 {

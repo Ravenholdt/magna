@@ -9,7 +9,9 @@ add_executable(magna
     resources.cpp
     
     ships.cpp
-    shipParts.cpp)
+    shipParts.cpp
+    
+    algorithms.cpp)
 
 target_link_libraries(magna)
 

@@ -7,9 +7,9 @@
 #include "colony.h"
 
 #define MINUTE  60
-#define HOUR    3600
-#define DAY     86400
-#define WEEK    604800
+#define HOUR    60*60
+#define DAY     24*60*60
+#define WEEK    7*24*60*60
 #define MONTH   2628000
 #define YEAR    31540000
 

@@ -25,8 +25,6 @@ class Colony
     float production[(int)Resources::indexLast]={0};
     float requests[(int)Resources::indexLast]={0};
 
-    long long int lastProduce;
-
     std::vector<int> shipHangar;
 
     Colony();

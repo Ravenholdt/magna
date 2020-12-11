@@ -20,10 +20,13 @@ class Colony
 	int lifespan = 1200;// in months
 	float basegrowthmod = 0.00165; // per month
 	float growthmod = 0.00165;
+	float infrastructure = 0;
 
     float stockpileMaterials[(int)Resources::indexLast]={0};
     float production[(int)Resources::indexLast]={0};
+	int factoriesNum = 0;
     float requests[(int)Resources::indexLast]={0};
+	float needs[(int)Resources::indexLast]={0};
 
     std::vector<int> shipHangar;
 

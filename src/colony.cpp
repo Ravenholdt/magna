@@ -90,7 +90,7 @@ void Colony::tickDaily()
 
     this->produce();
 
-    for (int i = 0; i < (int)Resources::indexRaw; i++)
+    for (int i = 0; i < (int)Resources::indexRaw;	i++)
     {
         std::cout << galaxy.celestials[this->parent].planetaryMaterials[i] << ", ";
     }
@@ -107,6 +107,23 @@ void Colony::tickDaily()
         std::cout << this->production[i] << ", ";
     }
     std::cout << std::endl;
+}
+
+void Colony::popCalculator() {
+	long long int pop = this->population;
+	long long int deaths = pop / this->lifespan;
+	long long int growth = pop * this->growthmod;
+	this->population -= deaths;
+	this->population += growth;
+
+
+	/*std::cout << endl;
+	std::cout << "Pop:	" << pop << endl;
+	std::cout << "deaths:	" << deaths << endl;
+	std::cout << "growth:	" << growth << endl;
+
+	std::cout << endl;*/
+	std::cout << "newpop:	" << this->population << endl;
 }
 
 void Colony::tickMonthly()

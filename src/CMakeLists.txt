@@ -7,6 +7,7 @@ add_executable(magna
     celestial.cpp 
     colony.cpp
     resources.cpp
+	AI.cpp
     
     ships.cpp
     shipParts.cpp

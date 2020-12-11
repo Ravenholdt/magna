@@ -3,6 +3,10 @@ part parts[(int)PartID::partindex];
 
 void partdeclaration() {
 
+	/*
+	troligtvis så ska startvärderna för intgritet vara 100X massa
+	*/
+
 	parts[(int)PartID::command].volume = 40; //5percrew+ 20
 	parts[(int)PartID::command].mass = 10000; //1000percrew+
 	parts[(int)PartID::command].integrity = 100; //20 integrity = 1000 kilos, 5 volume; 

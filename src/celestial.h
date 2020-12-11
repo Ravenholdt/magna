@@ -19,6 +19,7 @@ class Celestial
     CelestialType type = CelestialType::planet;
     int parent;
     float distance;
+	std::string name;
 
     float atmosphere = 0;
     float habitability;

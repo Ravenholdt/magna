@@ -5,6 +5,8 @@ enum class Resources
     metal, indexRaw, 
     infrastructure, spareParts, indexResource,
     mine, factory, indexStructure, 
+	//ship parts
+	command, engine, gun, generator, crewquarters, cargospace, systemdrive,
     indexLast
 };
 

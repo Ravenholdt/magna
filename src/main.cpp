@@ -17,10 +17,16 @@ int createSol()
     p = galaxy.celestials[sun].newChild(6.76e10, 3.301e23, 2.44e6, CelestialType::planet); // Mercury
     p = galaxy.celestials[sun].newChild(1.078e11, 4.867e24, 6.05e6, CelestialType::planet); // Venus
     p = galaxy.celestials[sun].newChild(1.474e11, 5.97e24, 6.371e6, CelestialType::planet); // Earth
+	galaxy.celestials[p].name = "Earth";
         galaxy.celestials[p].habitability = 1;
         galaxy.celestials[p].atmosphere = 1;
         c = galaxy.celestials[p].newColony(p); // Humanity
         galaxy.colonies[c].population = 10000000000;
+		galaxy.colonies[c].factoriesNum = 10000;
+		galaxy.colonies[c].production[(int)Resources::metal] = 100;
+
+		galaxy.colonies[c].infrastructure = galaxy.colonies[c].population;
+
         m = galaxy.celestials[p].newChild(3.85e8, 7.3459e22, 1.7374e6, CelestialType::moon); // Moon
         c = galaxy.celestials[m].newColony(m); // Lunar Base
         galaxy.colonies[c].population = 10000;

@@ -26,15 +26,13 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
     for(int i = 0; i < (int)Resources::indexRaw; i++)
     {
         this->planetaryMaterials[i] = 0.5;
-        this->priceBase[i] = 1;
-        this->priceMod[i] = 1;
     }
 
-    this->gravity();
+    this->environment.gravity = this->gravity();
 };
 
 float Celestial::gravity() { return calculateGravity(this->mass, this->radius); }
-float Celestial::deltaV() { return calculateDeltaV(this->mass, this->radius, this->atmosphere); }
+float Celestial::deltaV() { return calculateDeltaV(this->mass, this->radius, this->environment.atmosphere); }
 
 void Celestial::addChild(int child)
 {
@@ -91,11 +89,6 @@ void Celestial::tick(long long int time)
 
     if (!this->colonies.size()) return; // If planet is inactive, return.
 
-    for (int i = 0; i < (int)Resources::indexLast; i++)
-    {
-        this->demand[i] = 0;
-    }
-
     //float infrastructureRequirment = this->population - this->infrastructure;
     //this->demand[(int)Resources::infrastructure] += infrastructureRequirment;
     //float ratio = this->stockpileMaterials[(int)Resources::infrastructure] / infrastructureRequirment;
@@ -109,11 +102,6 @@ void Celestial::tick(long long int time)
     for (int i = 0; i < this->colonies.size(); i++)
     {
         galaxy.colonies[this->colonies[i]].tick(time);
-    }
-
-    for (int i = 0; i < (int)Resources::indexLast; i++)
-    {
-        this->priceBase[i] = 1;
     }
 
 //    for (int i = 0; i < (int)Resources::indexLast; i++)

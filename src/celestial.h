@@ -10,6 +10,14 @@
 
 enum class CelestialType {star, planet, dwarfPlanet, moon, asteroid};
 
+struct Environment
+{
+    float atmosphere = 0;
+    float gravity = 0;
+    float temperature = 0;
+    float habitability = 0;
+};
+
 class Celestial
 {
     private:
@@ -21,8 +29,7 @@ class Celestial
     float distance;
 	std::string name;
 
-    float atmosphere = 0;
-    float habitability;
+    Environment environment;
     
     std::vector<int> childs;
     std::vector<int> colonies;
@@ -34,11 +41,6 @@ class Celestial
     int offset = 0;
 
     float planetaryMaterials[(int)Resources::indexRaw]={0};
-
-    float stockpileMaterials[(int)Resources::indexLast]={0};
-    float demand [(int)Resources::indexLast]={0};
-    float priceBase[(int)Resources::indexLast]={0};
-    float priceMod[(int)Resources::indexLast]={0};
 
     Celestial(int id, int parent, float distance, float mass, float radius, CelestialType type);
     Celestial();

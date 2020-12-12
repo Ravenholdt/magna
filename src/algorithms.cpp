@@ -11,7 +11,7 @@ float calculateDeltaV(float mass, float radius, float atmosphere)
 {
     float period = calculateOrbitalPeriod(mass, radius);
     float velocity = calculateOrbitalVelocity(period, radius);
-    return velocity * 1.1 + velocity * atmosphere * 0.1;
+    return velocity * 1.1 + velocity * pow(atmosphere, 2) * 0.1;
 }
 
 float calculateGravity(float mass, float radius){ return (G * mass) / pow(radius, 2); }

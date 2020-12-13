@@ -12,6 +12,7 @@ enum class Resources
 
 struct Recipe
 {
+    float workforce = 10;
     float input[(int)Resources::indexLast]={0};
     float output[(int)Resources::indexLast]={0};
 };

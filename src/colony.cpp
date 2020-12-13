@@ -24,18 +24,31 @@ void Colony::produce()
 {
     float request[(int)Resources::indexLast] = {0};
     float ratio[(int)Resources::indexLast] = {0};
+    float workforceRatio;
+
+    // Go through all factories and check avalible workforce.
+    float requiredWorkforce = 0;
+    for (int prod = 0; prod < (int)Resources::indexLast; prod++)
+    {
+        requiredWorkforce += recipes[prod].workforce;
+    }
+
+    if (requiredWorkforce)
+    {
+        workforceRatio = this->population / requiredWorkforce;
+        if (workforceRatio > 1) { workforceRatio = 1; }
+    }
 
     // Go through all factories and list their consumptions.
     for (int prod = 0; prod < (int)Resources::indexLast; prod++)
     {
         for (int i = 0; i < (int)Resources::indexLast; i++)
         {
-            request[i] += recipes[prod].input[i]*production[prod];
+            request[i] += recipes[prod].input[i] * production[prod] * workforceRatio;
         }
     }
 	
     // Check avalability of resources
-	
     for (int i = 0; i < (int)Resources::indexLast; i++)
     {
         ratio[i] = 1;
@@ -57,8 +70,8 @@ void Colony::produce()
 
         for (int i = 0; i < (int)Resources::indexLast; i++)
         {
-            this->stockpileMaterials[i] -= recipes[prod].input[i]*production[prod]*efficency;
-            this->stockpileMaterials[i] += recipes[prod].output[i]*production[prod]*efficency;
+            this->stockpileMaterials[i] -= recipes[prod].input[i] * production[prod] * efficency;
+            this->stockpileMaterials[i] += recipes[prod].output[i] * production[prod] * efficency;
         }
     }
 }

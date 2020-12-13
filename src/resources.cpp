@@ -12,47 +12,47 @@ void initiateRecipes()
         switch (i)
         {
         case (int)Resources::infrastructure:
-            recipes[i].input[(int)Resources::metal] = 1;
+            recipes[i].input[(int)Resources::industrialMetals] = 1;
             recipes[i].output[(int)Resources::infrastructure] = 1;
             break;
         
         case (int)Resources::mine:
-            recipes[i].input[(int)Resources::metal] = 1;
+            recipes[i].input[(int)Resources::industrialMetals] = 1;
             recipes[i].output[(int)Resources::mine] = 1;
             break;
 
         case (int)Resources::factory:
-            recipes[i].input[(int)Resources::metal] = 1;
+            recipes[i].input[(int)Resources::industrialMetals] = 1;
             recipes[i].output[(int)Resources::mine] = 1;
             break;
 
 			//ship parts
 		case (int)Resources::command:
-			recipes[i].input[(int)Resources::metal] = 1;
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
 			recipes[i].output[(int)Resources::command] = 0.1;
 			break;
 		case (int)Resources::engine:
-			recipes[i].input[(int)Resources::metal] = 1;
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
 			recipes[i].output[(int)Resources::engine] = 0.1;
 			break;
 		case (int)Resources::gun:
-			recipes[i].input[(int)Resources::metal] = 1;
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
 			recipes[i].output[(int)Resources::gun] = 0.5;
 			break;
 		case (int)Resources::generator:
-			recipes[i].input[(int)Resources::metal] = 1;
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
 			recipes[i].output[(int)Resources::generator] = 0.2;
 			break;
 		case (int)Resources::crewquarters:
-			recipes[i].input[(int)Resources::metal] = 1;
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
 			recipes[i].output[(int)Resources::crewquarters] = 0.5;
 			break;
 		case (int)Resources::cargospace:
-			recipes[i].input[(int)Resources::metal] = 1;
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
 			recipes[i].output[(int)Resources::cargospace] = 1;
 			break;
 		case (int)Resources::systemdrive:
-			recipes[i].input[(int)Resources::metal] = 0.2;
+			recipes[i].input[(int)Resources::industrialMetals] = 0.2;
 			recipes[i].output[(int)Resources::systemdrive] = 0.2;
 			break;
         default:

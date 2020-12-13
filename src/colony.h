@@ -42,5 +42,6 @@ class Colony
     void tickMonthly();
     void tickYearly();
 
+	void mining();
 	void popCalculator();
 };

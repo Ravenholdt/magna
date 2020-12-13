@@ -2,7 +2,7 @@
 
 enum class Resources 
 {
-    metal, indexRaw, 
+    industrialMetals, rareMetals, preciousMetals, indexRaw, 
     infrastructure, spareParts, indexResource,
     mine, factory, indexStructure, 
 	//ship parts

@@ -7,19 +7,27 @@ void generateTerra(int sun)
 		galaxy.celestials[p].name = "Terra";
 		galaxy.celestials[p].environment.habitability = 1;
 		galaxy.celestials[p].environment.atmosphere = 1;
+		galaxy.celestials[p].planetaryMaterials[(int)Resources::industrialMetals] = 10e0;
+		galaxy.celestials[p].planetaryMaterials[(int)Resources::rareMetals] = 10e-3;
+		galaxy.celestials[p].planetaryMaterials[(int)Resources::preciousMetals] = 10e-9;
 
 	c = galaxy.celestials[p].newColony(p); // Humanity
 		galaxy.colonies[c].population = 10000000000;
 		galaxy.colonies[c].factoriesNum = 10000;
 		galaxy.colonies[c].stockpileMaterials[(int)Resources::mine] = 10;
-		galaxy.colonies[c].production[(int)Resources::metal] = 100;
+		galaxy.colonies[c].production[(int)Resources::industrialMetals] = 100;
 		galaxy.colonies[c].infrastructure = galaxy.colonies[c].population;
 
     m = galaxy.celestials[p].newChild(3.85e8, 7.3459e22, 1.7374e6, CelestialType::moon); // Moon
 		galaxy.celestials[m].name = "Luna";
         galaxy.celestials[m].environment.habitability = 0.2;
+		galaxy.celestials[m].planetaryMaterials[(int)Resources::industrialMetals] = 10e0;
+		galaxy.celestials[m].planetaryMaterials[(int)Resources::rareMetals] = 10e-3;
+		galaxy.celestials[m].planetaryMaterials[(int)Resources::preciousMetals] = 10e-9;
+
 	c = galaxy.celestials[m].newColony(m); // Lunar Base
 		galaxy.colonies[c].population = 10000;
+
 }
 
 int generateSol()

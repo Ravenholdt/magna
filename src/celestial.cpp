@@ -23,11 +23,6 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
         this->orbitalPeriod = calculateOrbitalPeriod(galaxy.celestials[this->parent].mass, distance);
     }
 
-    for(int i = 0; i < (int)Resources::indexRaw; i++)
-    {
-        this->planetaryMaterials[i] = 0.5;
-    }
-
     this->environment.gravity = this->gravity();
 };
 

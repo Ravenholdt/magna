@@ -7,7 +7,7 @@ namespace AI {
 
 	void Production(Colony colony) {
 		colony.factoriesNum;
-		colony.production[(int)Resources::metal] = 1000;
+		colony.production[(int)Resources::industrialMetals] = 1000;
 
 	}
 

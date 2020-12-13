@@ -48,6 +48,7 @@ class Celestial
 
     //SET-GET
     int getID(){return id;}
+    Celestial* getParent();
     float gravity();
     float deltaV();
 

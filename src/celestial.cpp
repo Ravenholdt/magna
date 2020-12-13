@@ -26,6 +26,8 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
     this->environment.gravity = this->gravity();
 };
 
+Celestial* Celestial::getParent() { return &galaxy.celestials[this->parent]; }
+
 float Celestial::gravity() { return calculateGravity(this->mass, this->radius); }
 float Celestial::deltaV() { return calculateDeltaV(this->mass, this->radius, this->environment.atmosphere); }
 

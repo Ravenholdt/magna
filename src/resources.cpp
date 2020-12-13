@@ -23,8 +23,12 @@ void initiateRecipes()
 
         case (int)Resources::factory:
             recipes[i].input[(int)Resources::industrialMetals] = 1;
-            recipes[i].output[(int)Resources::mine] = 1;
+            recipes[i].output[(int)Resources::factory] = 1;
             break;
+			//consumer goods
+		case (int)Resources::consumerGoods:
+			recipes[i].input[(int)Resources::industrialMetals] = 1;
+			recipes[i].output[(int)Resources::consumerGoods] = 1;
 
 			//ship parts
 		case (int)Resources::command:

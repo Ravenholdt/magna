@@ -3,7 +3,7 @@
 enum class Resources 
 {
     industrialMetals, rareMetals, preciousMetals, indexRaw, 
-    infrastructure, spareParts, indexResource,
+    infrastructure, consumerGoods, spareParts, indexResource,
     mine, factory, indexStructure, 
 	//ship parts
 	command, engine, gun, generator, crewquarters, cargospace, systemdrive,

@@ -47,7 +47,7 @@ struct fleet {
 	string name;
 	int fleetid;
 	long int cargospace;
-	int resources[(int)Resources::indexLast];
+	float resources[(int)Resources::indexLast];
 	map<int, int> ships;
 	int location = 0;
 	int travelspeed = 1;

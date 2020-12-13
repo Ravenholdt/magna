@@ -24,7 +24,6 @@ void Colony::produce()
 {
     float request[(int)Resources::indexLast] = {0};
     float ratio[(int)Resources::indexLast] = {0};
-	float activeFactories = 0, poplationavalibility  = 1;
 
     // Go through all factories and list their consumptions.
     for (int prod = 0; prod < (int)Resources::indexLast; prod++)
@@ -32,18 +31,14 @@ void Colony::produce()
         for (int i = 0; i < (int)Resources::indexLast; i++)
         {
             request[i] += recipes[prod].input[i]*production[prod];
-			activeFactories += production[prod];
         }
     }
 	
     // Check avalability of resources
-	if (activeFactories * 10 > population);
-	{
-		poplationavalibility = population / (activeFactories * 10);
-	}
+	
     for (int i = 0; i < (int)Resources::indexLast; i++)
     {
-        ratio[i] = (1 * poplationavalibility);
+        ratio[i] = 1;
         float newRatio = 1;
         if (request[i]) newRatio = this->stockpileMaterials[i] / request[i];
         if (newRatio < ratio[i]) ratio[i] = newRatio;
@@ -79,6 +74,7 @@ void Colony::tickDaily()
     {
         this->stockpileMaterials[i] += galaxy.celestials[this->parent].planetaryMaterials[i] * this->stockpileMaterials[(int)Resources::mine];
     }
+	//cout <<"avalibility:	" << galaxy.celestials[this->parent].planetaryMaterials[(int)Resources::industrialMetals] << endl;
 
     this->produce();
 	/*
@@ -87,8 +83,7 @@ void Colony::tickDaily()
         std::cout << galaxy.celestials[this->parent].planetaryMaterials[i] << ", ";
     }
     std::cout << std::endl;
-	*/
-	cout << "stockpile:	";
+	
     for (int i = 0; i < (int)Resources::indexLast; i++)
     {
         std::cout << this->stockpileMaterials[i] << ", ";
@@ -100,10 +95,23 @@ void Colony::tickDaily()
         std::cout << this->production[i] << ", ";
     }
     std::cout << std::endl;
+	*/
+	Colony::popComsume();
+	cout << "Metals:	" << (long long int)this->stockpileMaterials[(int)Resources::industrialMetals] << endl;
+	cout << "Goods:	" << (long long int)this->stockpileMaterials[(int)Resources::consumerGoods] << endl;
+	
 }
 
-void Colony::mining() {
-
+void Colony::popComsume() {
+	float consumergoodsAvalibility = stockpileMaterials[(int)Resources::consumerGoods] / (population * 0.0005);
+	cout << stockpileMaterials[(int)Resources::consumerGoods] << endl;
+	cout << "Avalibility:	" << consumergoodsAvalibility << endl;
+	if (consumergoodsAvalibility < 1) {
+		stockpileMaterials[(int)Resources::consumerGoods] = 0;
+	}
+	else {
+		stockpileMaterials[(int)Resources::consumerGoods] -= (population * 0.0005);// consume 1 per 100 per month in daily ticks.
+	}
 }
 
 void Colony::popCalculator() {
@@ -117,5 +125,5 @@ void Colony::popCalculator() {
 
 void Colony::tickMonthly()
 {
-    this->popCalculator();
+    //this->popCalculator();
 }

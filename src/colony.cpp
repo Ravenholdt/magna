@@ -63,7 +63,7 @@ void Colony::produce()
     // Go through all factories and produce and consume.
     for (int prod = 0; prod < (int)Resources::indexLast; prod++)
     {
-        float efficency = 1;
+        float efficency = 1 * workforceRatio;
         for (int i = 0; i < (int)Resources::indexLast; i++)
         {
             float newefficency = ratio[i];

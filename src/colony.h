@@ -7,6 +7,17 @@
 
 class Celestial;
 
+struct Population
+{
+    long long int amount;
+    float needs[(int)Resources::indexLast] = {0};
+
+    int lifespan = 1200;// in months
+	float basegrowthmod = 0.00165; // per month
+	float growthmod = 0.00165;
+};
+
+
 class Colony
 {
     private:
@@ -16,10 +27,7 @@ class Colony
     int owner;
     int parent;
 
-    long long int population;
-	int lifespan = 1200;// in months
-	float basegrowthmod = 0.00165; // per month
-	float growthmod = 0.00165;
+    Population population;
 	float infrastructure = 0;
 
     float stockpileMaterials[(int)Resources::indexLast]={0};

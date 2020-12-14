@@ -15,6 +15,8 @@ Colony::Colony(int id, int parent, int owner)
 
     this->stockpileMaterials[(int)Resources::mine] = 1;
     this->production[(int)Resources::infrastructure] = 1;
+
+    this->population.needs[(int)Resources::consumerGoods] = 0.0005;
 }
 
 Colony::Colony(){}
@@ -35,7 +37,7 @@ void Colony::produce()
 
     if (requiredWorkforce)
     {
-        workforceRatio = this->population / requiredWorkforce;
+        workforceRatio = this->population.amount / requiredWorkforce;
         if (workforceRatio > 1) { workforceRatio = 1; }
     }
 
@@ -116,24 +118,25 @@ void Colony::tickDaily()
 }
 
 void Colony::popComsume() {
-	float consumergoodsAvalibility = stockpileMaterials[(int)Resources::consumerGoods] / (population * 0.0005);
-	cout << stockpileMaterials[(int)Resources::consumerGoods] << endl;
+	float consumergoodsAvalibility = this->stockpileMaterials[(int)Resources::consumerGoods] / (this->population.amount * this->population.needs[(int)Resources::consumerGoods]);
+	cout << this->stockpileMaterials[(int)Resources::consumerGoods] << endl;
 	cout << "Avalibility:	" << consumergoodsAvalibility << endl;
 	if (consumergoodsAvalibility < 1) {
-		stockpileMaterials[(int)Resources::consumerGoods] = 0;
+		this->stockpileMaterials[(int)Resources::consumerGoods] = 0;
 	}
 	else {
-		stockpileMaterials[(int)Resources::consumerGoods] -= (population * 0.0005);// consume 1 per 100 per month in daily ticks.
+        // consume 1 per 100 per month in daily ticks.
+		this->stockpileMaterials[(int)Resources::consumerGoods] -= (this->population.amount * this->population.needs[(int)Resources::consumerGoods]);
 	}
 }
 
 void Colony::popCalculator() {
-	long long int pop = this->population;
-	long long int deaths = pop / this->lifespan;
-	long long int growth = pop * this->growthmod;
-	this->population -= deaths;
-	this->population += growth;
-	std::cout << "newpop:	" << this->population << endl;
+	long long int pop = this->population.amount;
+	long long int deaths = pop / this->population.lifespan;
+	long long int growth = pop * this->population.growthmod;
+	this->population.amount -= deaths;
+	this->population.amount += growth;
+	std::cout << "newpop:	" << this->population.amount << endl;
 }
 
 void Colony::tickMonthly()

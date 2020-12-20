@@ -1,15 +1,10 @@
 #include <iostream>
 
 #include "main.h"
-#include "galaxy.h"
-#include "algorithms.h"
-#include "generateSol.h"
-
-#include "ships.h"
 
 using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
 	initiateRecipes();
 
@@ -24,12 +19,27 @@ int main()
 
 	std::cout << "Begin" << std::endl;
 
-	while (true)
+	// GUI
+	if (argc == 1)
 	{
-		getchar();
-		galaxy.tick(DAY);
+		sf::RenderWindow window(sf::VideoMode(200, 200), "Ello!");
+		int is_running = 0;
+		do
+		{
+			is_running = gui(window);
+		} while (is_running);
+	}
 
-		std::cout << "Day: " << galaxy.time / (float)DAY << std::endl;
+	// No GUI
+	else
+	{
+		while (true)
+		{
+			getchar();
+			galaxy.tick(DAY);
+
+			std::cout << "Day: " << galaxy.time / (float)DAY << std::endl;
+		}
 	}
 
 	return 0;

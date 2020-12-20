@@ -1,4 +1,4 @@
-#find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
+find_package(SFML 2 COMPONENTS network audio graphics window system REQUIRED)
 
 add_executable(magna 
     main.cpp 
@@ -13,9 +13,11 @@ add_executable(magna
     shipParts.cpp
     
     algorithms.cpp
-    generateSol.cpp)
+    generateSol.cpp
+    
+    gui/gui.cpp)
 
-target_link_libraries(magna)
+target_link_libraries(magna sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
 
 
 # sfml-system sfml-window sfml-graphics sfml-network sfml-audio

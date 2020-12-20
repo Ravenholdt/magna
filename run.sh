@@ -1,3 +1,3 @@
 #!/bin/bash
 
-./build/magna
+./build/magna no-gui

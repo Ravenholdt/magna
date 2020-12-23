@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	// GUI
 	if (argc == 1)
 	{
-		gui(window);
+		gui();
 	}
 
 	// No GUI

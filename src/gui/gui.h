@@ -2,4 +2,4 @@
 
 #include "sfml.h"
 
-void gui(sf::RenderWindow& window);
+void gui();

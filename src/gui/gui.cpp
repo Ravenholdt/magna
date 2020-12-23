@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-void gui(sf::RenderWindow& window)
+void gui()
 {
     sf::RenderWindow window(sf::VideoMode(200, 200), "Ello!");
 	while(window.isOpen())

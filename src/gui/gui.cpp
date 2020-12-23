@@ -2,9 +2,11 @@
 
 #include <iostream>
 
-bool gui(sf::RenderWindow& window)
+void gui(sf::RenderWindow& window)
 {
-    std::cout << "Graphics!" << std::endl;
-
-    return window.isOpen();
+    sf::RenderWindow window(sf::VideoMode(200, 200), "Ello!");
+	while(window.isOpen())
+    {
+        // Do stuff here.
+    }
 }

@@ -22,12 +22,7 @@ int main(int argc, char *argv[])
 	// GUI
 	if (argc == 1)
 	{
-		sf::RenderWindow window(sf::VideoMode(200, 200), "Ello!");
-		int is_running = 0;
-		do
-		{
-			is_running = gui(window);
-		} while (is_running);
+		gui(window);
 	}
 
 	// No GUI

@@ -7,6 +7,10 @@
 
 Galaxy galaxy;
 
+System*     Galaxy::getSystem(int id)       { return &galaxy.systems[id]; }
+Celestial*  Galaxy::getCelestial(int id)    { return &galaxy.celestials[id]; }
+Colony*     Galaxy::getColony(int id)       { return &galaxy.colonies[id]; }
+
 int Galaxy::newCelestial(int parent, float distance, float mass, float radius, CelestialType type)
 {
     celestialCounter++;
@@ -116,7 +120,7 @@ void Galaxy::tickHourly()
 
 void Galaxy::tickDaily()
 {
-    for (std::pair<int, Celestial> element : this->celestials) {
+    for (std::pair<int, System> element : this->systems) {
         element.second.tickDaily();
     }
 }

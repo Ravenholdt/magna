@@ -2,8 +2,8 @@
 
 #include <vector>
 
+#include "galaxy.h"
 #include "resources.h"
-#include "celestial.h"
 
 class Celestial;
 

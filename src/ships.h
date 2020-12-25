@@ -63,7 +63,7 @@ int shipinitialization();
 void designconstructor(shipdesign*, int);
 void shipconstructor(shipdesign*);
 
-void fleetconstructor(ship*, Celestial);
+void fleetconstructor(ship*, int);
 void addtofleet(fleet*, ship*);
 void removefromfleet(fleet*, ship*);
 void deletefleet();

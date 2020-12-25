@@ -1,8 +1,7 @@
 #include <iostream>
 #include <math.h>
 
-#include "galaxy.h"
-#include "algorithms.h"
+#include "celestial.h"
 
 int planetOffset = 0;
 
@@ -20,16 +19,15 @@ Celestial::Celestial(int id, int parent, float distance, float mass, float radiu
 
     if (parent) 
     {
-        this->orbitalPeriod = calculateOrbitalPeriod(galaxy.celestials[this->parent].mass, distance);
+        this->orbitalPeriod = calculateOrbitalPeriod(this->getParent()->mass, distance);
+        this->system = this->getParent()->getSystem()->getId();
     }
 
     this->environment.gravity = this->gravity();
 };
 
-Celestial* Celestial::getParent() { return &galaxy.celestials[this->parent]; }
-
-float Celestial::gravity() { return calculateGravity(this->mass, this->radius); }
-float Celestial::deltaV() { return calculateDeltaV(this->mass, this->radius, this->environment.atmosphere); }
+Celestial* Celestial::getParent() { return galaxy.getCelestial(this->parent); }
+System* Celestial::getSystem() { return galaxy.getSystem(this->system); }
 
 void Celestial::addChild(int child)
 {
@@ -40,7 +38,7 @@ void Celestial::addToParent()
 {
     if (this->parent) 
     {
-        galaxy.celestials[this->parent].addChild(this->id);
+        this->getParent()->addChild(this->id);
     }
 }
 
@@ -67,14 +65,14 @@ void Celestial::getPosInSystem(float* x, float* y, long long int time)
 
     double pi = 3.14159265;
     double placeInOrbit;
-    while (galaxy.celestials[current].parent)
+    while (galaxy.getCelestial(current)->parent)
     {   
-        parent = galaxy.celestials[current].parent;
+        parent = galaxy.getCelestial(current)->parent;
 
-        placeInOrbit = (time % galaxy.celestials[current].orbitalPeriod) / (float)galaxy.celestials[current].orbitalPeriod;
+        placeInOrbit = (time % galaxy.getCelestial(current)->orbitalPeriod) / (float)galaxy.getCelestial(current)->orbitalPeriod;
 
-        *x = (cos(placeInOrbit * 360. * (pi/180.)) * (double)galaxy.celestials[current].distance);
-        *y = (sin(placeInOrbit * 360. * (pi/180.)) * (double)galaxy.celestials[current].distance);
+        *x = (cos(placeInOrbit * 360. * (pi/180.)) * (double)galaxy.getCelestial(current)->distance);
+        *y = (sin(placeInOrbit * 360. * (pi/180.)) * (double)galaxy.getCelestial(current)->distance);
 
         current = parent;
     }
@@ -98,7 +96,7 @@ void Celestial::tick(long long int time)
 
     for (int i = 0; i < this->colonies.size(); i++)
     {
-        galaxy.colonies[this->colonies[i]].tick(time);
+        galaxy.getColony(this->colonies[i])->tick(time);
     }
 
 //    for (int i = 0; i < (int)Resources::indexLast; i++)
@@ -114,11 +112,20 @@ void Celestial::tick(long long int time)
 
 void Celestial::tickDaily()
 {
-    if (!this->colonies.size()) return; // If planet is inactive, return.
-
-    for (int i = 0; i < this->colonies.size(); i++)
+    if (this->childs.size())
     {
-        galaxy.colonies[this->colonies[i]].tickDaily();
+        for (int i = 0; i < this->childs.size(); i++)
+        {
+            galaxy.getCelestial(this->childs[i])->tickDaily();
+        }
+    }
+
+    if (this->colonies.size())
+    {
+        for (int i = 0; i < this->colonies.size(); i++)
+        {
+            galaxy.getColony(this->colonies[i])->tickDaily();
+        }
     }
 }
 
@@ -128,6 +135,6 @@ void Celestial::tickMonthly()
 
     for (int i = 0; i < this->colonies.size(); i++)
     {
-        galaxy.colonies[this->colonies[i]].tickMonthly();
+        galaxy.getColony(this->colonies[i])->tickMonthly();
     }
 }

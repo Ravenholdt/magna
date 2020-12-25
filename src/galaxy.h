@@ -15,6 +15,11 @@
 
 #define KM      1000
 
+enum class CelestialType;
+class System;
+class Celestial;
+class Colony;
+
 class Galaxy
 {
 private:
@@ -40,9 +45,13 @@ public:
 	long long int month = 0;
 	long long int year = 0;
 
-    int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newSystem();
+    int newCelestial(int parent, float distance, float mass, float radius, CelestialType type);
     int newColony(int parent);
+
+    System*     getSystem(int id);
+    Celestial*  getCelestial(int id);
+    Colony*     getColony(int id);
 
     int newShip();
 	int newFleet();

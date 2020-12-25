@@ -29,7 +29,7 @@ int shipinitialization()
 	for (int i = 0; i < 3; i++)
 		shipconstructor(&shipdesigns[1]);
 
-	fleetconstructor(&shipmap[1], galaxy.celestials[4]);
+	fleetconstructor(&shipmap[1], galaxy.getCelestial(4)->getID());
 
 	addtofleet(&fleets[1], &shipmap[2]);
 
@@ -142,11 +142,11 @@ void shipconstructor(shipdesign* design) {
 	*/
 }
 
-void fleetconstructor(ship* ship, Celestial orbit) {
+void fleetconstructor(ship* ship, int orbit) {
 	int fleetid = galaxy.newFleet();
 	fleets[fleetid].fleetid = fleetid;
 	fleets[fleetid].name = "Numero uno fleet";
-	fleets[fleetid].location = orbit.getID();
+	fleets[fleetid].location = orbit;
 	fleets[fleetid].travelspeed = shipdesigns[ship->designid].drivespeed;
 	fleets[fleetid].ships[ship->shipid] = ship->shipid;
 	ship->fleetid = fleetid;
@@ -177,12 +177,12 @@ void movefleet(int source, int target, int id) {
 	cout << (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID() << "	";
 	*/
 	while (i > 0) {// departure, ska det verkligen vara s� h�r mycket kod f�r att hitta stj�rnan i systemet?
-		if ((int)galaxy.celestials[galaxy.celestials[starFinder].parent].type == (int)CelestialType::star) {
-			fleets[id].location = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
+		if (galaxy.getCelestial(starFinder)->getParent()->type == CelestialType::star) {
+			fleets[id].location = galaxy.getCelestial(starFinder)->getParent()->getID();
 			i = 0;
 		}
 		else {
-			starFinder = (int)galaxy.celestials[galaxy.celestials[starFinder].parent].getID();
+			starFinder = galaxy.getCelestial(starFinder)->getParent()->getID();
 			i++;
 			if (i > 10) i = 0;
 		}

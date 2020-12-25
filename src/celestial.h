@@ -4,9 +4,12 @@
 
 #include <vector>
 
-#include "resources.h"
-#include "colony.h"
 #include "galaxy.h"
+#include "resources.h"
+
+#include "algorithms.h"
+
+class System;
 
 enum class CelestialType {star, planet, dwarfPlanet, moon, asteroid};
 
@@ -26,6 +29,7 @@ class Celestial
     public:
     CelestialType type = CelestialType::planet;
     int parent;
+    int system;
     float distance;
 	std::string name;
 
@@ -49,8 +53,9 @@ class Celestial
     //SET-GET
     int getID(){return id;}
     Celestial* getParent();
-    float gravity();
-    float deltaV();
+    System* getSystem();
+    float gravity() { return calculateGravity(this->mass, this->radius); }
+    float deltaV() { return calculateDeltaV(this->mass, this->radius, this->environment.atmosphere); }
 
     void addChild(int);
     int newChild(float distance, float mass, float radius, CelestialType type);

@@ -1,7 +1,6 @@
 
 #include <iostream>
 
-#include "galaxy.h"
 #include "colony.h"
 
 using namespace std;
@@ -75,6 +74,11 @@ void Colony::produce()
             this->stockpileMaterials[i] -= recipes[prod].input[i] * production[prod] * efficency;
             this->stockpileMaterials[i] += recipes[prod].output[i] * production[prod] * efficency;
         }
+    }
+
+    for (int i = 0; i < (int)Resources::indexLast; i++)
+    {
+        this->requests[i] = request[i]*12;
     }
 }
 

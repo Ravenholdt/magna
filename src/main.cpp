@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 
 	for (int i = 1; i <= galaxy.celestials.size(); i++)
 	{
-		std::cout << galaxy.celestials[i].parent << " <- " << galaxy.celestials[i].getID() << std::endl;
+		std::cout << galaxy.getCelestial(i)->parent << " <- " << galaxy.getCelestial(i)->getID() << std::endl;
 	}
 
 	std::cout << "Begin" << std::endl;
